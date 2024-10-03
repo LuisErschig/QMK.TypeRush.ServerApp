@@ -1,0 +1,129 @@
+﻿.main {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 20px 0;
+}
+
+h1 {
+    font-family: 'Arial Black';
+    font-size: 50px;
+    text-align: center;
+}
+
+.table-container-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+thead {
+    font-size: 20px;
+}
+
+    thead tr:hover {
+        cursor: pointer;
+    }
+
+.table-leaderboard {
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 2000px;
+}
+
+tbody tr:last-child {
+    border-bottom: hidden;
+}
+
+tbody tr:hover {
+    background-color: lightblue
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    border-bottom: 2px solid lightgray;
+}
+
+.cell-name {
+    width: 850px;
+    padding-left: 30px;
+    padding-right: 10px;
+    text-align: left;
+}
+.cell-class {
+    width: 350px;
+    text-align: center;
+}
+.cell-time {
+    width: 350px;
+    padding-right: 30px;
+    padding-left: 10px;
+    text-align: right;
+}
+.cell-errors {
+    width: 350px;
+    padding-right: 30px;
+    padding-left: 10px;
+    text-align: right;
+}
+
+.button-row {
+    width: 200px;
+    text-align: right;
+    padding-right: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.action-in-row-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+    .action-in-row-button .material-symbols-outlined {
+        color: black;
+        font-size: 22px;
+        vertical-align: bottom;
+    }
+
+
+
+/*
+    Bewegender Text für zu langen Text
+
+#flow-text-div {
+    overflow: hidden;
+}
+
+.text-container {
+    white-space: nowrap;
+    overflow: visible;
+}
+
+span {
+    display: inline-block;
+}
+
+.animate {
+    position: relative;
+    animation: leftright 3s infinite alternate ease-in-out;
+}
+
+@keyframes leftright {
+    0%, 10% {
+        transform: translateX(0%);
+        left: 0%;
+    }
+
+    90%, 100% {
+        transform: translateX(-100%);
+        left: 100%;
+    }
+}*/

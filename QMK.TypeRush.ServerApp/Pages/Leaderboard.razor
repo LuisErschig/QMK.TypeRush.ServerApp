@@ -1,0 +1,52 @@
+﻿@page "/leaderboard"
+@inject IJSRuntime JsRuntime
+@inject ILogger<Leaderboard> logger
+@inject IWebHostEnvironment Env
+
+@* https://fonts.google.com/icons *@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<PageTitle>@PageHeader</PageTitle>
+
+<main class="main">
+    <h1>@PageHeader</h1>
+
+    <p style="height: 50px;"></p>
+
+    @if (this.leaderboardEntries == null)
+    {
+        <p style="display: flex; align-items: center; justify-content: center;"><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="table-container-div">
+            <table class="table table-leaderboard">
+                <thead>
+                    <tr>
+                        <th class="cell-name" @onclick="@(() => this.SortTable("Name"))">Name @(this.GetSortIcon("Name"))</th>
+                        <th class="cell-class" @onclick="@(() => this.SortTable("Class"))">Class @(this.GetSortIcon("Class"))</th>
+                        <th class="cell-time" @onclick="@(() => this.SortTable("Time"))">Time @(this.GetSortIcon("Time"))</th>
+                        <th class="cell-errors" @onclick="@(() => this.SortTable("Errors"))">Errors @(this.GetSortIcon("Errors"))</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in this.leaderboardEntries)
+                    {
+                        <tr>
+                            <td class="cell-name">@entry.Name</td>
+                            <td class="cell-class">@entry.Class</td>
+                            <td class="cell-time">@GeneralizeTime(entry.Time)</td>
+                            <td class="cell-errors">@entry.Errors</td>
+                            <td class="button-row">
+                                <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
+                                    <span class="material-symbols-outlined">delete_forever</span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</main>
