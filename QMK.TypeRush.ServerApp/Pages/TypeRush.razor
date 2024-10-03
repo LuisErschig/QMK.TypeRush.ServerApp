@@ -1,12 +1,11 @@
 ﻿@page "/typerush"
+@inject IJSRuntime JsRuntime
 @inject ILogger<Leaderboard> logger
 @inject IWebHostEnvironment Env
 
 <PageTitle>TypeRush</PageTitle>
 
-<h1>TypeRush</h1>
-
-@if (!GameStarted && !GameFinished)
+@* @if (!GameStarted && !GameFinished)
 {
     <div class="game-box">
         <button @onclick="StartCountdown" class="start-button">Start Game</button>
@@ -41,28 +40,29 @@ else
             <button type="submit" class="submit-button">Submit Score</button>
         </form>
     </div>
-}
-
-<hr />
-
-<p style="height: 100px;"></p>
+} *@
 
 <main class="main">
     <h1>TypeRush</h1>
     <hr />
     <p style="height: 25px;"></p>
 
-    <div class="game-box">
-        <button @onclick="StartCountdown" class="start-button">Start Game</button>
-    </div>
-
     <div class="text-box" contenteditable="false">
-        @TextToType
+        @textToType
     </div>
 
     <p style="height: 25px;"></p>
 
-    <input class="input-box" type="text" disabled="@InputDiasbled"/>
+    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDown" disabled="@InputDiasbled" />
+
+    <div class="game-box" hidden="@StartButtonDiasbled">
+        <p style="height: 40px;"></p>
+        <button @onclick="StartCountdown" class="start-button">Start Game</button>
+    </div>
+
+    <div class="game-box" hidden="@CountdownBoxDisabled">
+        <p style="font-family: Arial Black; font-size: 150px;">@countdown</p>
+    </div>
 
 </main>
 

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
+using Newtonsoft.Json;
 using QMK.TypeRush.ServerApp.DataObjects;
 using System.Diagnostics;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -12,59 +10,72 @@ namespace QMK.TypeRush.ServerApp.Pages;
 
 public partial class TypeRush
 {
-    protected bool InputDiasbled { get; set; } = true;
+    private bool InputDiasbled { get; set; } = true;
+    private bool StartButtonDiasbled { get; set; } = false;
+    private bool CountdownBoxDisabled { get; set; } = true;
 
+    private readonly string textToType = "This is the text that you need to type correctly!";
+    private string userInput = "";
+    private string countdown = "3";
+    private double gameTimeElapsed = 0;
+    private string playerName = "";
+    private string playerClass = "";
+    private int errors = 0;
 
-    protected string TextToType = "This is the text that you need to type correctly!";
-    protected string UserInput = "";
-    protected bool GameStarted = false;
-    protected bool GameFinished = false;
-    protected int Countdown = 0;
-    protected double GameTimeElapsed = 0;
-    protected string PlayerName = "";
-    protected string PlayerClass = "";
-    protected int Errors = 0;
+    private readonly Stopwatch stopwatch = new();
+    private readonly Timer countdownTimer = new(1000);
 
-    private Stopwatch stopwatch = new();
-    private Timer countdownTimer;
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        this.countdownTimer = new Timer(1000);
+        await base.OnInitializedAsync();
+
         this.countdownTimer.Elapsed += CountdownElapsed;
     }
 
-    protected async Task StartCountdown()
+    private void StartCountdown()
     {
-        this.Countdown = 3;
-        this.GameStarted = false;
-        this.GameFinished = false;
-        this.UserInput = "";
-        this.Errors = 0;
+        this.StartButtonDiasbled = true;
+        this.CountdownBoxDisabled = false;
+        this.countdown = "3";
+        this.userInput = "";
+        this.errors = 0;
         this.countdownTimer.Start();
     }
 
-    private void CountdownElapsed(object sender, ElapsedEventArgs e)
+    private void CountdownElapsed(object? sender, ElapsedEventArgs e)
     {
-        if (this.Countdown > 0)
+        if (this.countdown == "3")
         {
-            this.Countdown--;
+            this.countdown = "2";
         }
-        else
+        else if (this.countdown == "2")
         {
+            this.countdown = "1";
+        }
+        else if (this.countdown == "1")
+        {
+            this.countdown = "GO";
+            this.InputDiasbled = false;
             this.countdownTimer.Stop();
+            _ = SetFocus();
             StartGame();
         }
+
         InvokeAsync(StateHasChanged);
     }
 
-    protected void StartGame()
+    private async Task SetFocus()
     {
-        this.GameStarted = true;
+        await Task.Delay(1);
+        await this.JsRuntime.InvokeVoidAsync("focusElement", "UserInputBox");
+    }
+
+    private void StartGame()
+    {
         this.stopwatch.Restart();
     }
 
-    protected void HandleKeyDown(KeyboardEventArgs e)
+    private void HandleKeyDown(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
@@ -72,18 +83,16 @@ public partial class TypeRush
         }
     }
 
-    protected void EndGame()
+    private void EndGame()
     {
-        this.GameStarted = false;
-        this.GameFinished = true;
         this.stopwatch.Stop();
-        this.GameTimeElapsed = this.stopwatch.Elapsed.TotalSeconds;
-        this.Errors = CalculateErrors();
+        this.gameTimeElapsed = this.stopwatch.Elapsed.TotalSeconds;
+        this.errors = CalculateErrors();
     }
 
     private int CalculateErrors()
     {
-        return LevenshteinDistance(this.TextToType, this.UserInput);
+        return LevenshteinDistance(this.textToType, this.userInput);
     }
 
     private int LevenshteinDistance(string s, string t)
@@ -105,16 +114,16 @@ public partial class TypeRush
         return d[s.Length, t.Length];
     }
 
-    protected async Task SubmitScore()
+    private async Task SubmitScore()
     {
-        if (!string.IsNullOrEmpty(this.PlayerName))
+        if (!string.IsNullOrEmpty(this.playerName))
         {
             var entry = new LeaderboardEntries
             {
-                Name = this.PlayerName,
-                Class = this.PlayerClass,
-                Time = this.GameTimeElapsed,
-                Errors = this.Errors
+                Name = this.playerName,
+                Class = this.playerClass,
+                Time = this.gameTimeElapsed,
+                Errors = this.errors
             };
 
             var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
@@ -123,7 +132,7 @@ public partial class TypeRush
             if (File.Exists(filePath))
             {
                 var json = await File.ReadAllTextAsync(filePath);
-                entries = JsonSerializer.Deserialize<List<LeaderboardEntries>>(json) ?? new List<LeaderboardEntries>();
+                entries = JsonConvert.DeserializeObject<List<LeaderboardEntries>>(json) ?? new List<LeaderboardEntries>();
             }
             else
             {
@@ -132,7 +141,7 @@ public partial class TypeRush
 
             entries.Add(entry);
 
-            var jsonToSave = JsonSerializer.Serialize(entries);
+            var jsonToSave = JsonConvert.SerializeObject(entries);
             await File.WriteAllTextAsync(filePath, jsonToSave);
         }
     }
