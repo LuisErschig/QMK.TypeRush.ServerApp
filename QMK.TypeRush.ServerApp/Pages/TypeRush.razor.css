@@ -1,0 +1,66 @@
+﻿.main {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 20px 0;
+}
+
+h1 {
+    font-family: 'Arial Black';
+    font-size: 50px;
+    text-align: center;
+}
+
+.text-box {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    border: 3px solid #444;
+    padding: 20px 50px;
+    margin: 0 150px;
+    box-sizing: border-box;
+    width: calc(100% - 300px);
+}
+
+.input-box {
+    border-radius: 10px;
+    border: 3px solid #777;
+    padding: 20px 50px;
+    margin: 0 150px;
+    box-sizing: border-box;
+    width: calc(100% - 300px);
+}
+
+.game-box {
+    text-align: center;
+    margin: 20px;
+}
+
+.start-button, .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+    .start-button:hover, .submit-button:hover {
+        background-color: #45a049;
+    }
+
+.countdown {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+}
+
+.target-text {
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+h4 {
+    color: #333;
+}

@@ -1,0 +1,68 @@
+﻿@page "/typerush"
+@inject ILogger<Leaderboard> logger
+@inject IWebHostEnvironment Env
+
+<PageTitle>TypeRush</PageTitle>
+
+<h1>TypeRush</h1>
+
+@if (!GameStarted && !GameFinished)
+{
+    <div class="game-box">
+        <button @onclick="StartCountdown" class="start-button">Start Game</button>
+    </div>
+
+    @if (Countdown > 0)
+    {
+        <p class="countdown">Game starts in: @Countdown</p>
+    }
+}
+else if (GameStarted && !GameFinished)
+{
+    <div class="game-box">
+        <p class="target-text">@TextToType</p>
+        <input type="text" @bind="UserInput" @onkeydown="HandleKeyDown" class="input-box" />
+    </div>
+}
+else
+{
+    <div class="game-box">
+        <h4>Game Over!</h4>
+        <p>Total Time: @GameTimeElapsed seconds</p>
+        <p>Errors: @Errors</p>
+
+        <form @onsubmit="SubmitScore">
+            <label for="name">Name (required):</label>
+            <input type="text" id="name" @bind="PlayerName" required class="input-box"/>
+
+            <label for="class">Class (optional):</label>
+            <input type="text" id="class" @bind="PlayerClass" class="input-box"/>
+
+            <button type="submit" class="submit-button">Submit Score</button>
+        </form>
+    </div>
+}
+
+<hr />
+
+<p style="height: 100px;"></p>
+
+<main class="main">
+    <h1>TypeRush</h1>
+    <hr />
+    <p style="height: 25px;"></p>
+
+    <div class="game-box">
+        <button @onclick="StartCountdown" class="start-button">Start Game</button>
+    </div>
+
+    <div class="text-box" contenteditable="false">
+        @TextToType
+    </div>
+
+    <p style="height: 25px;"></p>
+
+    <input class="input-box" type="text" disabled="@InputDiasbled"/>
+
+</main>
+

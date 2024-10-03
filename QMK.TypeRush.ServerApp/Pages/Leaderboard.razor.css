@@ -55,16 +55,19 @@ th {
     padding-right: 10px;
     text-align: left;
 }
+
 .cell-class {
     width: 350px;
     text-align: center;
 }
+
 .cell-time {
     width: 350px;
     padding-right: 30px;
     padding-left: 10px;
     text-align: right;
 }
+
 .cell-errors {
     width: 350px;
     padding-right: 30px;
@@ -76,7 +79,6 @@ th {
     width: 200px;
     text-align: right;
     padding-right: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .action-in-row-button {
@@ -91,6 +93,7 @@ th {
         color: black;
         font-size: 22px;
         vertical-align: bottom;
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 200, 'opsz' 24
     }
 
 

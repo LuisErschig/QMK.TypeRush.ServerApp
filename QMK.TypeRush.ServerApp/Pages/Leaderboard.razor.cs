@@ -20,7 +20,7 @@ public partial class Leaderboard
     {
         await base.OnInitializedAsync();
 
-        var filePath = Path.Combine(Env.WebRootPath, "data", "leaderboard.json");
+        var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
 
         try
         {
@@ -163,7 +163,7 @@ public partial class Leaderboard
 
             this.leaderboardEntries.Remove(entry);
 
-            var filePath = Path.Combine(Env.WebRootPath, "data", "leaderboard.json");
+            var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
             var json = JsonConvert.SerializeObject(this.leaderboardEntries);
             await File.WriteAllTextAsync(filePath, json);
 
