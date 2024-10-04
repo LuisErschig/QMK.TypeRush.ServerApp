@@ -5,6 +5,57 @@
 
 <PageTitle>TypeRush</PageTitle>
 
+<main class="main">
+    <h1>TypeRush</h1>
+    <hr />
+
+    @switch (CountdownBoxDisabled)
+    {
+        case true:
+            <div style="height: 225px;"></div>
+            break;
+
+        case false:
+            <div class="countdown-box">
+                @countdown
+            </div>
+            break;
+    }
+
+    <div class="text-box" contenteditable="false">
+        @textToType
+    </div>
+
+    <div style="height: 60px;"></div>
+
+    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDiasbled" />
+
+    <div class="button-container-right" hidden="@StartButtonDiasbled">
+        <div style="height: 40px;"></div>
+        <button @onclick="StartCountdown" class="start-button">Start Game</button>
+    </div>
+
+    <div style="height: 60px;"></div>
+
+    <div style="display: block; align-content: center">
+        <div class="container">
+            <div class="label">
+                <p>Fehler:</p>
+                <p>Zeit:</p>
+            </div>
+            <div class="data">
+                <p>404</p>
+                <p>12:30</p>
+            </div>
+        </div>
+        <button class="start-button leaderboard-button">Ins Leaderboard eintragen</button>
+    </div>
+
+</main>
+
+
+
+
 @* @if (!GameStarted && !GameFinished)
 {
     <div class="game-box">
@@ -41,28 +92,3 @@ else
         </form>
     </div>
 } *@
-
-<main class="main">
-    <h1>TypeRush</h1>
-    <hr />
-    <p style="height: 25px;"></p>
-
-    <div class="text-box" contenteditable="false">
-        @textToType
-    </div>
-
-    <p style="height: 25px;"></p>
-
-    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDown" disabled="@InputDiasbled" />
-
-    <div class="game-box" hidden="@StartButtonDiasbled">
-        <p style="height: 40px;"></p>
-        <button @onclick="StartCountdown" class="start-button">Start Game</button>
-    </div>
-
-    <div class="game-box" hidden="@CountdownBoxDisabled">
-        <p style="font-family: Arial Black; font-size: 150px;">@countdown</p>
-    </div>
-
-</main>
-

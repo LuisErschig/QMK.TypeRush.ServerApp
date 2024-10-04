@@ -31,9 +31,17 @@ h1 {
     width: calc(100% - 300px);
 }
 
-.game-box {
+.button-container-right {
     text-align: right;
     margin: 0 150px 0 0;
+}
+
+.countdown-box {
+    height: 225px;
+    text-align: center;
+    margin: 0;
+    font-family: Arial Black;
+    font-size: 150px;
 }
 
 .start-button, .submit-button {
@@ -69,4 +77,35 @@ h4 {
         text-align: center;
         margin: 0;
     }
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.label p, .data p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.label {
+    text-align: left;
+}
+
+.data {
+    text-align: right;
+}
+
+.leaderboard-button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container, .leaderboard-button {
+    width: fit-content;
 }

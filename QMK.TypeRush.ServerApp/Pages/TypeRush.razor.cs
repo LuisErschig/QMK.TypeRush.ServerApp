@@ -14,7 +14,7 @@ public partial class TypeRush
     private bool StartButtonDiasbled { get; set; } = false;
     private bool CountdownBoxDisabled { get; set; } = true;
 
-    private readonly string textToType = "This is the text that you need to type correctly!";
+    private readonly string textToType = "Das ist ein Testtext mit hallo und dass als Beispiel.";
     private string userInput = "";
     private string countdown = "3";
     private double gameTimeElapsed = 0;
@@ -57,16 +57,16 @@ public partial class TypeRush
             this.countdown = "GO";
             this.InputDiasbled = false;
             this.countdownTimer.Stop();
-            _ = SetFocus();
+            _ = SetFocusAsync();
             StartGame();
         }
 
         InvokeAsync(StateHasChanged);
     }
 
-    private async Task SetFocus()
+    private async Task SetFocusAsync()
     {
-        await Task.Delay(1);
+        await Task.Delay(5);
         await this.JsRuntime.InvokeVoidAsync("focusElement", "UserInputBox");
     }
 
@@ -75,44 +75,78 @@ public partial class TypeRush
         this.stopwatch.Restart();
     }
 
-    private void HandleKeyDown(KeyboardEventArgs e)
+    private async Task HandleKeyDownAsync(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
-            EndGame();
+            await EndGame();
         }
     }
 
-    private void EndGame()
+    private async Task EndGame()
     {
         this.stopwatch.Stop();
+        this.InputDiasbled = true;
         this.gameTimeElapsed = this.stopwatch.Elapsed.TotalSeconds;
-        this.errors = CalculateErrors();
+        this.errors = await CalculateErrors();
     }
 
-    private int CalculateErrors()
+    private async Task<int> CalculateErrors()
     {
-        return LevenshteinDistance(this.textToType, this.userInput);
+        await Task.Delay(5);
+
+        return CountMistakesWithTolerance(this.textToType, this.userInput);
     }
 
-    private int LevenshteinDistance(string s, string t)
+    private int CountMistakesWithTolerance(string expected, string input)
     {
-        int[,] d = new int[s.Length + 1, t.Length + 1];
+        int mistakes = 0;
+        int i = 0, j = 0;
 
-        for (int i = 0; i <= s.Length; i++) d[i, 0] = i;
-        for (int j = 0; j <= t.Length; j++) d[0, j] = j;
-
-        for (int i = 1; i <= s.Length; i++)
+        while (i < expected.Length && j < input.Length)
         {
-            for (int j = 1; j <= t.Length; j++)
+            if (expected[i] != input[j])
             {
-                int cost = (s[i - 1] == t[j - 1]) ? 0 : 1;
-                d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                mistakes++;
+
+                if (IsMatchWithinNextNCharacters(expected, input, i, j, 3))
+                {
+                    i++;
+                }
+                else if (IsMatchWithinNextNCharacters(input, expected, j, i, 3))
+                {
+                    j++;
+                }
             }
+
+            i++;
+            j++;
         }
 
-        return d[s.Length, t.Length];
+        if (i < expected.Length)
+        {
+            mistakes += expected.Length - i;
+        }
+        else if (j < input.Length)
+        {
+            mistakes += input.Length - j;
+        }
+
+        return mistakes;
     }
+
+    private bool IsMatchWithinNextNCharacters(string first, string second, int i, int j, int maxOffset)
+    {
+        for (int offset = 1; offset <= maxOffset; offset++)
+        {
+            if (i + offset < first.Length && j < second.Length && first[i + offset] == second[j])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private async Task SubmitScore()
     {
