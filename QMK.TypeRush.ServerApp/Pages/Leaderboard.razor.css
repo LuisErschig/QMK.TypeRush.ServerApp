@@ -29,7 +29,6 @@ thead {
 .table-leaderboard {
     padding: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 2000px;
 }
 
 tbody tr:last-child {
@@ -50,32 +49,34 @@ th {
 }
 
 .cell-name {
-    width: 850px;
+    max-width: 600px;
+    min-width: 300px;
     padding-left: 30px;
     padding-right: 10px;
     text-align: left;
 }
 
 .cell-class {
-    width: 350px;
+    min-width: 100px;
     text-align: center;
 }
 
 .cell-time {
-    width: 350px;
+    min-width: 100px;
     padding-right: 30px;
     padding-left: 10px;
     text-align: right;
 }
 
 .cell-errors {
-    width: 350px;
+    min-width: 100px;
     padding-right: 30px;
     padding-left: 10px;
     text-align: right;
 }
 
 .button-row {
+    min-width: 100px;
     width: 200px;
     text-align: right;
     padding-right: 20px;
@@ -97,11 +98,9 @@ th {
     }
 
 
+/*Bewegender Text für zu langen Text*/
 
-/*
-    Bewegender Text für zu langen Text
-
-#flow-text-div {
+/*#flow-text-div {
     overflow: hidden;
 }
 

@@ -1,6 +1,6 @@
 ﻿@page "/leaderboard"
 @inject IJSRuntime JsRuntime
-@inject ILogger<Leaderboard> logger
+@inject ILogger<Leaderboard> Logger
 @inject IWebHostEnvironment Env
 
 <PageTitle>@PageHeader</PageTitle>
@@ -21,22 +21,22 @@
         <div class="table-container-div">
             <table class="table table-leaderboard">
                 <thead>
-                    <tr>
-                        <th class="cell-name" @onclick="@(() => this.SortTable("Name"))">Name @(this.GetSortIcon("Name"))</th>
-                        <th class="cell-class" @onclick="@(() => this.SortTable("Class"))">Class @(this.GetSortIcon("Class"))</th>
-                        <th class="cell-time" @onclick="@(() => this.SortTable("Time"))">Time @(this.GetSortIcon("Time"))</th>
-                        <th class="cell-errors" @onclick="@(() => this.SortTable("Errors"))">Errors @(this.GetSortIcon("Errors"))</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th class="cell-name" @onclick="@(() => this.SortTable("Name"))">Name @(this.GetSortIcon("Name"))</th>
+                    <th class="cell-class" @onclick="@(() => this.SortTable("Class"))">Class @(this.GetSortIcon("Class"))</th>
+                    <th class="cell-time" @onclick="@(() => this.SortTable("Time"))">Time @(this.GetSortIcon("Time"))</th>
+                    <th class="cell-errors" @onclick="@(() => this.SortTable("Errors"))">Errors @(this.GetSortIcon("Errors"))</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                     @foreach (var entry in this.leaderboardEntries)
                     {
                         <tr>
-                            <td class="cell-name">@entry.Name</td>
-                            <td class="cell-class">@entry.Class</td>
-                            <td class="cell-time">@GeneralizeTime(entry.Time)</td>
-                            <td class="cell-errors">@entry.Errors</td>
+                            <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
+                            <td class="cell-class"><span>@entry.Class</span></td>
+                            <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
+                            <td class="cell-errors"><span>@entry.Errors</span></td>
                             <td class="button-row">
                                 <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
                                     <span class="material-symbols-outlined">delete_forever</span>

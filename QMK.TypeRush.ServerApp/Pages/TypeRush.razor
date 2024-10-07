@@ -1,7 +1,7 @@
 ﻿@page "/typerush"
 @inject IJSRuntime JsRuntime
-@inject ILogger<Leaderboard> logger
-@inject IWebHostEnvironment Env
+@inject ILogger<Leaderboard> Logger
+@inject NavigationManager NavigationManager
 
 <PageTitle>TypeRush</PageTitle>
 
@@ -12,7 +12,7 @@
     @switch (CountdownBoxDisabled)
     {
         case true:
-            <div style="height: 225px;"></div>
+            <div style="height: 175px;"></div>
             break;
 
         case false:
@@ -23,72 +23,22 @@
     }
 
     <div class="text-box" contenteditable="false">
-        @textToType
+        @TextToType
     </div>
 
     <div style="height: 60px;"></div>
 
-    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDiasbled" />
+    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDisabled" autocomplete="off" />
 
-    <div class="button-container-right" hidden="@StartButtonDiasbled">
+    <div class="button-container-right" hidden="@StartButtonDisabled">
         <div style="height: 40px;"></div>
-        <button @onclick="StartCountdown" class="start-button">Start Game</button>
+        <button @onclick="StartCountdown" class="btn btn-primary" style="height: 65px; width: 200px; font-size: 22px;">Start Game</button>
     </div>
-
-    <div style="height: 60px;"></div>
-
-    <div style="display: block; align-content: center">
-        <div class="container">
-            <div class="label">
-                <p>Fehler:</p>
-                <p>Zeit:</p>
-            </div>
-            <div class="data">
-                <p>404</p>
-                <p>12:30</p>
-            </div>
-        </div>
-        <button class="start-button leaderboard-button">Ins Leaderboard eintragen</button>
+    
+    <div class="button-container-right" hidden="@AuswertungButtonDisabled">
+        <div style="height: 40px;"></div>
+        <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px;">Zur Auswertung</button>
+        <button @onclick="ReloadTypeRush" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px;">Zurücksetzen</button>
     </div>
 
 </main>
-
-
-
-
-@* @if (!GameStarted && !GameFinished)
-{
-    <div class="game-box">
-        <button @onclick="StartCountdown" class="start-button">Start Game</button>
-    </div>
-
-    @if (Countdown > 0)
-    {
-        <p class="countdown">Game starts in: @Countdown</p>
-    }
-}
-else if (GameStarted && !GameFinished)
-{
-    <div class="game-box">
-        <p class="target-text">@TextToType</p>
-        <input type="text" @bind="UserInput" @onkeydown="HandleKeyDown" class="input-box" />
-    </div>
-}
-else
-{
-    <div class="game-box">
-        <h4>Game Over!</h4>
-        <p>Total Time: @GameTimeElapsed seconds</p>
-        <p>Errors: @Errors</p>
-
-        <form @onsubmit="SubmitScore">
-            <label for="name">Name (required):</label>
-            <input type="text" id="name" @bind="PlayerName" required class="input-box"/>
-
-            <label for="class">Class (optional):</label>
-            <input type="text" id="class" @bind="PlayerClass" class="input-box"/>
-
-            <button type="submit" class="submit-button">Submit Score</button>
-        </form>
-    </div>
-} *@

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using Newtonsoft.Json;
-using QMK.TypeRush.ServerApp.DataObjects;
 using System.Diagnostics;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -10,17 +8,16 @@ namespace QMK.TypeRush.ServerApp.Pages;
 
 public partial class TypeRush
 {
-    private bool InputDiasbled { get; set; } = true;
-    private bool StartButtonDiasbled { get; set; } = false;
+    private bool InputDisabled { get; set; } = true;
+    private bool StartButtonDisabled { get; set; }
+    private bool AuswertungButtonDisabled { get; set; } = true;
     private bool CountdownBoxDisabled { get; set; } = true;
 
-    private readonly string textToType = "Das ist ein Testtext mit hallo und dass als Beispiel.";
+    private const string TextToType = "Das ist ein Testtext mit hallo und dass als Beispiel.";
     private string userInput = "";
     private string countdown = "3";
-    private double gameTimeElapsed = 0;
-    private string playerName = "";
-    private string playerClass = "";
-    private int errors = 0;
+    private double gameTimeElapsed;
+    private int errors;
 
     private readonly Stopwatch stopwatch = new();
     private readonly Timer countdownTimer = new(1000);
@@ -34,7 +31,7 @@ public partial class TypeRush
 
     private void StartCountdown()
     {
-        this.StartButtonDiasbled = true;
+        this.StartButtonDisabled = true;
         this.CountdownBoxDisabled = false;
         this.countdown = "3";
         this.userInput = "";
@@ -44,21 +41,21 @@ public partial class TypeRush
 
     private void CountdownElapsed(object? sender, ElapsedEventArgs e)
     {
-        if (this.countdown == "3")
+        switch (this.countdown)
         {
-            this.countdown = "2";
-        }
-        else if (this.countdown == "2")
-        {
-            this.countdown = "1";
-        }
-        else if (this.countdown == "1")
-        {
-            this.countdown = "GO";
-            this.InputDiasbled = false;
-            this.countdownTimer.Stop();
-            _ = SetFocusAsync();
-            StartGame();
+            case "3":
+                this.countdown = "2";
+                break;
+            case "2":
+                this.countdown = "1";
+                break;
+            case "1":
+                this.countdown = "GO";
+                this.InputDisabled = false;
+                this.countdownTimer.Stop();
+                _ = SetFocusAsync();
+                StartGame();
+                break;
         }
 
         InvokeAsync(StateHasChanged);
@@ -80,28 +77,32 @@ public partial class TypeRush
         if (e.Key == "Enter")
         {
             await EndGame();
+            this.AuswertungButtonDisabled = false;
+
+            this.Logger.LogTrace($"Spiel ausgewertet. Anzahl Fehler: {this.errors}, benötigte Zeit: {this.gameTimeElapsed}.");
         }
     }
 
     private async Task EndGame()
     {
         this.stopwatch.Stop();
-        this.InputDiasbled = true;
+        this.InputDisabled = true;
         this.gameTimeElapsed = this.stopwatch.Elapsed.TotalSeconds;
         this.errors = await CalculateErrors();
     }
 
     private async Task<int> CalculateErrors()
     {
-        await Task.Delay(5);
+        await Task.Delay(100);
 
-        return CountMistakesWithTolerance(this.textToType, this.userInput);
+        return CountMistakesWithTolerance(TextToType, this.userInput);
     }
 
     private int CountMistakesWithTolerance(string expected, string input)
     {
-        int mistakes = 0;
-        int i = 0, j = 0;
+        var mistakes = 0;
+        var i = 0;
+        var j = 0;
 
         while (i < expected.Length && j < input.Length)
         {
@@ -137,7 +138,7 @@ public partial class TypeRush
 
     private bool IsMatchWithinNextNCharacters(string first, string second, int i, int j, int maxOffset)
     {
-        for (int offset = 1; offset <= maxOffset; offset++)
+        for (var offset = 1; offset <= maxOffset; offset++)
         {
             if (i + offset < first.Length && j < second.Length && first[i + offset] == second[j])
             {
@@ -147,36 +148,15 @@ public partial class TypeRush
         return false;
     }
 
-
-    private async Task SubmitScore()
+    private void NavigateToEnterLeaderboard()
     {
-        if (!string.IsNullOrEmpty(this.playerName))
-        {
-            var entry = new LeaderboardEntries
-            {
-                Name = this.playerName,
-                Class = this.playerClass,
-                Time = this.gameTimeElapsed,
-                Errors = this.errors
-            };
+        var uri = $"EnterLeaderboard?errors={this.errors}&time={this.gameTimeElapsed}";
 
-            var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
+        this.NavigationManager.NavigateTo(uri);
+    }
 
-            List<LeaderboardEntries> entries;
-            if (File.Exists(filePath))
-            {
-                var json = await File.ReadAllTextAsync(filePath);
-                entries = JsonConvert.DeserializeObject<List<LeaderboardEntries>>(json) ?? new List<LeaderboardEntries>();
-            }
-            else
-            {
-                entries = new List<LeaderboardEntries>();
-            }
-
-            entries.Add(entry);
-
-            var jsonToSave = JsonConvert.SerializeObject(entries);
-            await File.WriteAllTextAsync(filePath, jsonToSave);
-        }
+    private void ReloadTypeRush()
+    {
+        this.NavigationManager.NavigateTo("typerush", true);
     }
 }

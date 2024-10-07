@@ -10,8 +10,6 @@ public partial class Leaderboard
 
     private const string PageHeader = "Leaderboard";
 
-    private const string RequestUri = "data/leaderboard.json";
-
     private string currentSortColumn = "Errors";
 
     private bool isSortAscending = true;
@@ -40,11 +38,11 @@ public partial class Leaderboard
         }
         catch (FileNotFoundException)
         {
-            this.logger.LogTrace($"Leaderboard.json wurde nicht gefunden. Verwendeter Pfad: {filePath}");
+            this.Logger.LogError($"Leaderboard.json wurde nicht gefunden. Verwendeter Pfad: {filePath}");
         }
         catch (Exception ex)
         {
-            this.logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
+            this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
         }
     }
 
@@ -128,7 +126,7 @@ public partial class Leaderboard
     {
         var timeString = Math.Round(time, 3).ToString().Replace(",", ".");
 
-        switch (timeString.Substring(timeString.IndexOf(".") + 1).Length)
+        switch (timeString.Substring(timeString.IndexOf(".", StringComparison.Ordinal) + 1).Length)
         {
             case 0:
                 timeString = $"{timeString}000";
@@ -152,7 +150,7 @@ public partial class Leaderboard
 
             if (confirmed == false)
             {
-                this.logger.LogTrace($"Löschen des Eintrags von {entry.Name} abgebrochen.");
+                this.Logger.LogTrace($"Löschen des Eintrags von {entry.Name} abgebrochen.");
                 return;
             }
 
@@ -167,15 +165,15 @@ public partial class Leaderboard
             var json = JsonConvert.SerializeObject(this.leaderboardEntries);
             await File.WriteAllTextAsync(filePath, json);
 
-            this.logger.LogTrace($"Eintrags von {entry.Name} gelöscht.");
+            this.Logger.LogTrace($"Eintrags von {entry.Name} gelöscht.");
         }
         catch (ArgumentNullException)
         {
-            this.logger.LogError($"Übergebener Eintrag oder Leaderboard darf nicht NULL sein.");
+            this.Logger.LogError($"Übergebener Eintrag oder Leaderboard darf nicht NULL sein.");
         }
         catch (Exception ex)
         {
-            this.logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
+            this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
         }
     }
 }
