@@ -1,0 +1,44 @@
+﻿@page "/typerush"
+@inject IJSRuntime JsRuntime
+@inject ILogger<Leaderboard> Logger
+@inject NavigationManager NavigationManager
+
+<PageTitle>TypeRush</PageTitle>
+
+<main class="main">
+    <h1>TypeRush</h1>
+    <hr />
+
+    @switch (CountdownBoxDisabled)
+    {
+        case true:
+            <div style="height: 175px;"></div>
+            break;
+
+        case false:
+            <div class="countdown-box">
+                @countdown
+            </div>
+            break;
+    }
+
+    <div class="text-box" contenteditable="false">
+        @TextToType
+    </div>
+
+    <div style="height: 60px;"></div>
+
+    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDisabled" autocomplete="off" />
+
+    <div class="button-container-right" hidden="@StartButtonDisabled">
+        <div style="height: 40px;"></div>
+        <button @onclick="StartCountdown" class="btn btn-primary" style="height: 65px; width: 200px; font-size: 22px;">Start Game</button>
+    </div>
+    
+    <div class="button-container-right" hidden="@AuswertungButtonDisabled">
+        <div style="height: 40px;"></div>
+        <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px;">Zur Auswertung</button>
+        <button @onclick="ReloadTypeRush" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px;">Zurücksetzen</button>
+    </div>
+
+</main>

@@ -1,0 +1,47 @@
+﻿@page "/enter-leaderboard"
+@inject NavigationManager NavigationManager
+@inject IWebHostEnvironment Env
+
+<PageTitle>Enter Leaderboard</PageTitle>
+
+<main class="main">
+    <h3>Ins Leaderboard eintragen</h3>
+    
+    <hr/>
+    <div style="height: 30px;"></div>
+
+    <form>
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <label class="control-label">Name</label>
+                <input class="form-control" type="text" autocomplete="off" @bind="leaderboardEntries.Name" />
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <label class="control-label">Klasse</label>
+                <input class="form-control" type="text" autocomplete="off" @bind="leaderboardEntries.Class" />
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <label class="control-label">Fehler</label>
+                <input class="form-control" readonly @bind="leaderboardEntries.Errors" />
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <label class="control-label">Zeit</label>
+                <input class="form-control" readonly @bind="leaderboardEntries.Time" />
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" @onclick="CreateEntryAsync">Save</button>
+                    <button type="button" class="btn btn-danger" @onclick="CancelAsync">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
