@@ -16,12 +16,17 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="typerush">
-                <span class="oi oi-plus" aria-hidden="true"></span> TypeRush
+                <span class="oi oi-text" aria-hidden="true"></span> TypeRush
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="text-selection">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Select Text
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -31,14 +36,3 @@
         </div>
     </nav>
 </div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

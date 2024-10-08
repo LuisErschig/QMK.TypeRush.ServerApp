@@ -1,0 +1,39 @@
+﻿@page "/text-selection"
+@inject IWebHostEnvironment Env
+@inject ILogger<TextSelection> Logger
+
+<PageTitle>Select Text</PageTitle>
+
+<main class="main">
+    <h1>Select Text</h1>
+    
+    <hr />
+
+    <div style="height: 40px;"></div>
+
+    @if (this.texts == null)
+    {
+        <p style="display: flex; align-items: center; justify-content: center;"><em>Loading...</em></p>
+    }
+    else
+    {
+        @foreach (var text in this.texts)
+        {
+            <form>
+                <div class="row ms-5 mb-5">
+                    <div class="col-md-8">
+                        <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text" />
+                        @if (text.Aktiviert)
+                        {
+                            <button class="btn btn-dark" @onclick="() => SetActiveText(text.Id)" disabled>Aktiviert</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" @onclick="() => SetActiveText(text.Id)">Aktivieren</button>
+                        }
+                    </div>
+                </div>
+            </form>
+        }
+    }
+</main>

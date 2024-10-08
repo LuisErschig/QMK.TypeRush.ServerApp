@@ -150,7 +150,7 @@ public partial class TypeRush
 
     private void NavigateToEnterLeaderboard()
     {
-        var uri = $"EnterLeaderboard?errors={this.errors}&time={this.gameTimeElapsed}";
+        var uri = $"enter-leaderboard?errors={this.errors}&time={this.gameTimeElapsed}";
 
         this.NavigationManager.NavigateTo(uri);
     }

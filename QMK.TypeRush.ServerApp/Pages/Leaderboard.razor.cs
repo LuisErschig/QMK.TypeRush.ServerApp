@@ -162,7 +162,7 @@ public partial class Leaderboard
             this.leaderboardEntries.Remove(entry);
 
             var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
-            var json = JsonConvert.SerializeObject(this.leaderboardEntries);
+            var json = JsonConvert.SerializeObject(this.leaderboardEntries, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, json);
 
             this.Logger.LogTrace($"Eintrags von {entry.Name} gelöscht.");
