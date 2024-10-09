@@ -1,12 +1,12 @@
 [
   {
     "Id": 1,
-    "Aktiviert": false,
+    "Aktiviert": true,
     "Text": "Ein einfacher Beispieltext für Typerace."
   },
   {
     "Id": 2,
-    "Aktiviert": true,
+    "Aktiviert": false,
     "Text": "Dieser Text enthält mehr Sonderzeichen! Wie z.B.: !?§$%&"
   },
   {
@@ -15,4 +15,3 @@
     "Text": "Ein längerer und schwierigerer Text, der für fortgeschrittene Spieler geeignet ist."
   }
 ]
-

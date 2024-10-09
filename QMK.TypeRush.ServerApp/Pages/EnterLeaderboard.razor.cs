@@ -33,16 +33,16 @@ public partial class EnterLeaderboard
             if (File.Exists(filePath))
             {
                 var json = await File.ReadAllTextAsync(filePath);
-                entries = JsonConvert.DeserializeObject<List<LeaderboardEntries>>(json) ?? new List<LeaderboardEntries>();
+                entries = JsonConvert.DeserializeObject<List<LeaderboardEntries>>(json) ?? [];
             }
             else
             {
-                entries = new List<LeaderboardEntries>();
+                entries = [];
             }
 
             entries.Add(this.leaderboardEntries);
 
-            var jsonToSave = JsonConvert.SerializeObject(entries);
+            var jsonToSave = JsonConvert.SerializeObject(entries, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, jsonToSave);
         }
 
