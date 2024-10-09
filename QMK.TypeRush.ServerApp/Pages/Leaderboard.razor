@@ -18,6 +18,13 @@
     }
     else
     {
+        <div class="button-container-right">
+            <a href="data/leaderboard.json" type="button" class="btn btn-primary mb-3" download>
+                <span class="material-symbols-outlined" style="vertical-align: sub;">download</span>
+                <span class="ms-3" style="font-family: Segoe UI Semibold;">EXPORT</span>
+            </a>
+        </div>
+
         <div class="table-container-div">
             <table class="table table-leaderboard">
                 <thead>
@@ -30,20 +37,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach (var entry in this.leaderboardEntries)
-                    {
-                        <tr>
-                            <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
-                            <td class="cell-class"><span>@entry.Class</span></td>
-                            <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
-                            <td class="cell-errors"><span>@entry.Errors</span></td>
-                            <td class="button-row">
-                                <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
-                                    <span class="material-symbols-outlined">delete_forever</span>
-                                </button>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var entry in this.leaderboardEntries)
+                {
+                    <tr>
+                        <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
+                        <td class="cell-class"><span>@entry.Class</span></td>
+                        <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
+                        <td class="cell-errors"><span>@entry.Errors</span></td>
+                        <td class="button-row">
+                            <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
+                                <span class="material-symbols-outlined">delete_forever</span>
+                            </button>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
