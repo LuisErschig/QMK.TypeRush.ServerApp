@@ -1,6 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using QMK.TypeRush.ServerApp.DataObjects;
+using System.Xml.Linq;
 
 namespace QMK.TypeRush.ServerApp.Pages;
 
@@ -142,6 +143,11 @@ public partial class Leaderboard
         }
     }
 
+    public async Task ToggleDropdownAsync(string containerId)
+    {
+        await this.JsRuntime.InvokeVoidAsync("toggleDropdown", containerId);
+    }
+
     public async Task DeleteEntry(LeaderboardEntries entry)
     {
         try
@@ -175,5 +181,37 @@ public partial class Leaderboard
         {
             this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
         }
+    }
+
+    private async Task DownloadXml()
+    {
+        const string fileName = "leaderboard.xml";
+
+        if (this.leaderboardEntries == null)
+        {
+            await this.JsRuntime.InvokeVoidAsync("alert", "Noch keine Einträge im Leaderboard");
+            return;
+        }
+
+        var xmlContent = ConvertJsonToXml();
+
+        await this.JsRuntime.InvokeVoidAsync("downloadFile", fileName, xmlContent);
+    }
+
+    private string ConvertJsonToXml()
+    {
+        var xDocument = new XDocument(
+            new XElement("Leaderboard",
+                from entry in this.leaderboardEntries
+                select new XElement("Entry",
+                    new XElement("Name", entry.Name),
+                    new XElement("Class", entry.Class ?? "N/A"),
+                    new XElement("Time", entry.Time),
+                    new XElement("Errors", entry.Errors)
+                )
+            )
+        );
+
+        return xDocument.ToString();
     }
 }

@@ -18,11 +18,26 @@
     }
     else
     {
-        <div class="button-container-right">
+        @* <div class="button-container-right">
             <a href="data/leaderboard.json" type="button" class="btn btn-primary mb-3" download>
                 <span class="material-symbols-outlined" style="vertical-align: sub;">download</span>
                 <span class="ms-3" style="font-family: Segoe UI Semibold;">EXPORT</span>
             </a>
+        </div> *@
+
+        <div class="button-container-right">
+            <div class="dropdown">
+                <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ExportDropdown"))">
+                    <span class="material-symbols-outlined" style="vertical-align: bottom;">download</span>
+                    <span>EXPORT</span>
+                    <span class="ms-4 dropdown-toggle"></span>
+                </button>
+                <div id="ExportDropdown" class="mb-3 dropdown-menu dropdown-hide">
+                    <button class="dropdown-item">AS Json</button>
+                    <button class="dropdown-item" @onclick="DownloadXml">AS XML</button>
+                    <button class="dropdown-item">AS CSV</button>
+                </div>
+            </div>
         </div>
 
         <div class="table-container-div">
@@ -54,5 +69,5 @@
                 </tbody>
             </table>
         </div>
-    }
+        }
 </main>
