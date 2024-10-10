@@ -1,8 +1,18 @@
-﻿using Microsoft.JSInterop;
+﻿using iText.Kernel.Colors;
+using iText.Kernel.Geom;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using QMK.TypeRush.ServerApp.DataObjects;
 using System.Text;
 using System.Xml.Linq;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using Path = System.IO.Path;
 
 namespace QMK.TypeRush.ServerApp.Pages;
 
@@ -242,5 +252,129 @@ public partial class Leaderboard
         }
 
         return csv.ToString();
+    }
+
+    private async Task DownloadExcel()
+    {
+        const string fileName = "leaderboard.xlsx";
+
+        if (this.leaderboardEntries == null)
+        {
+            await this.JsRuntime.InvokeVoidAsync("alert", "Noch keine Einträge im Leaderboard");
+            return;
+        }
+
+        var excelBytes = CreateExcelFile();
+
+        using var stream = new MemoryStream(excelBytes);
+
+        await this.JsRuntime.InvokeVoidAsync("downloadFileFromStream", fileName, new DotNetStreamReference(stream: stream));
+    }
+
+    private byte[] CreateExcelFile()
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        using var package = new ExcelPackage();
+
+        var worksheet = package.Workbook.Worksheets.Add("Leaderboard");
+
+        worksheet.Cells[1, 1].Value = "Name";
+        worksheet.Cells[1, 2].Value = "Class";
+        worksheet.Cells[1, 3].Value = "Time (sec)";
+        worksheet.Cells[1, 4].Value = "Errors";
+
+        using (var range = worksheet.Cells[1, 1, 1, 4])
+        {
+            range.Style.Font.Bold = true;
+            range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+        }
+
+        var row = 2;
+        foreach (var entry in this.leaderboardEntries!)
+        {
+            worksheet.Cells[row, 1].Value = entry.Name;
+            worksheet.Cells[row, 2].Value = !string.IsNullOrWhiteSpace(entry.Class) ? entry.Class : "N / A";
+            worksheet.Cells[row, 3].Value = entry.Time;
+            worksheet.Cells[row, 4].Value = entry.Errors;
+            row++;
+        }
+
+        worksheet.Cells.AutoFitColumns();
+
+        return package.GetAsByteArray();
+    }
+
+    private async Task DownloadPdf()
+    {
+        const string fileName = "leaderboard.pdf";
+
+        if (this.leaderboardEntries == null)
+        {
+            await this.JsRuntime.InvokeVoidAsync("alert", "Noch keine Einträge im Leaderboard");
+            return;
+        }
+
+        var pdfBytes = CreatePdfFile();
+
+        using var stream = new MemoryStream(pdfBytes);
+        await this.JsRuntime.InvokeVoidAsync("downloadFileFromStream", fileName, new DotNetStreamReference(stream: stream));
+    }
+
+    private byte[] CreatePdfFile()
+    {
+        using var memoryStream = new MemoryStream();
+
+        using (var pdfWriter = new PdfWriter(memoryStream))
+        {
+            using (var pdfDocument = new PdfDocument(pdfWriter))
+            {
+                pdfDocument.SetDefaultPageSize(PageSize.A4.Rotate());
+                
+                var document = new Document(pdfDocument);
+                document.SetMargins(30, 20, 30, 20);
+
+                document.Add(new Paragraph("Leaderboard").SetFontSize(20).SetBold());
+
+                var table = new Table(UnitValue.CreatePercentArray(new float[] { 25, 25, 25, 25 }))
+                    .UseAllAvailableWidth();
+
+                table.SetMarginTop(10F);
+                table.SetBorder(new SolidBorder(Color.ConvertRgbToCmyk(new DeviceRgb(0,0,0)), 1.5F));
+
+                var headerCell1 = new Cell().Add(new Paragraph("Name").SetFontSize(13).SetBold().SetUnderline(1F, -2F)).SetBorderBottom(new SolidBorder(Color.ConvertRgbToCmyk(new DeviceRgb(80, 120, 255)), 1.5F)).SetPaddings(10F, 20F, 1F, 10F);
+                var headerCell2 = new Cell().Add(new Paragraph("Class").SetFontSize(13).SetBold().SetUnderline(1F, -2F)).SetBorderBottom(new SolidBorder(Color.ConvertRgbToCmyk(new DeviceRgb(80, 120, 255)), 1.5F)).SetPaddings(10F, 20F, 1F, 10F);
+                var headerCell3 = new Cell().Add(new Paragraph("Time (sec)").SetFontSize(13).SetBold().SetUnderline(1F, -2F)).SetBorderBottom(new SolidBorder(Color.ConvertRgbToCmyk(new DeviceRgb(80, 120, 255)), 1.5F)).SetPaddings(10F, 20F, 1F, 10F);
+                var headerCell4 = new Cell().Add(new Paragraph("Errors").SetFontSize(13).SetBold().SetUnderline(1F, -2F)).SetBorderBottom(new SolidBorder(Color.ConvertRgbToCmyk(new DeviceRgb(80, 120, 255)), 1.5F)).SetPaddings(10F, 20F, 1F, 10F);
+
+                table.AddHeaderCell(headerCell1);
+                table.AddHeaderCell(headerCell2);
+                table.AddHeaderCell(headerCell3);
+                table.AddHeaderCell(headerCell4);
+
+                const float cellPaddingTop = 2F;
+                const float cellPaddingRight = 10F;
+                const float cellPaddingBottom = 2F;
+                const float cellPaddingLeft = 10F;
+
+                foreach (var entry in this.leaderboardEntries!)
+                {
+                    var cellName = new Cell().Add(new Paragraph(entry.Name)).SetPaddings(cellPaddingTop, cellPaddingRight, cellPaddingBottom, cellPaddingLeft);
+                    var cellClass = new Cell().Add(new Paragraph(!string.IsNullOrWhiteSpace(entry.Class) ? entry.Class : "N / A")).SetPaddings(cellPaddingTop, cellPaddingRight, cellPaddingBottom, cellPaddingLeft);
+                    var cellTime = new Cell().Add(new Paragraph(entry.Time.ToString("F3"))).SetPaddings(cellPaddingTop, cellPaddingRight, cellPaddingBottom, cellPaddingLeft);
+                    var cellErrors = new Cell().Add(new Paragraph(entry.Errors.ToString())).SetPaddings(cellPaddingTop, cellPaddingRight, cellPaddingBottom, cellPaddingLeft);
+
+                    table.AddCell(cellName);
+                    table.AddCell(cellClass);
+                    table.AddCell(cellTime);
+                    table.AddCell(cellErrors);
+                }
+
+                document.Add(table);
+                document.Close();
+            }
+        }
+        return memoryStream.ToArray();
     }
 }

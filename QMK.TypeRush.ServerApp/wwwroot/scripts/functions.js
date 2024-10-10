@@ -14,6 +14,17 @@ window.downloadFile = function (fileName, fileContent) {
     document.body.removeChild(element);
 };
 
+window.downloadFileFromStream = async function (fileName, contentStreamReference) {
+    const arrayBuffer = await contentStreamReference.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const anchorElement = document.createElement('a');
+    anchorElement.href = url;
+    anchorElement.download = fileName;
+    anchorElement.click();
+    URL.revokeObjectURL(url);
+};
+
 function toggleDropdown(containerId) {
     var element = document.getElementById(containerId);
     var showDropdown = "dropdown-show";
