@@ -20,8 +20,6 @@ public partial class Leaderboard
 {
     private List<LeaderboardEntries>? leaderboardEntries;
 
-    private const string PageHeader = "Leaderboard";
-
     private string currentSortColumn = "Errors";
 
     private bool isSortAscending = true;

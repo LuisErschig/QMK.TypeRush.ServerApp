@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using Newtonsoft.Json;
+using QMK.TypeRush.ServerApp.DataObjects;
 using System.Diagnostics;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -9,11 +11,14 @@ namespace QMK.TypeRush.ServerApp.Pages;
 public partial class TypeRush
 {
     private bool InputDisabled { get; set; } = true;
+
     private bool StartButtonDisabled { get; set; }
+
     private bool AuswertungButtonDisabled { get; set; } = true;
+
     private bool CountdownBoxDisabled { get; set; } = true;
 
-    private const string TextToType = "Das ist ein Testtext mit hallo und dass als Beispiel.";
+    private string textToType = string.Empty;
     private string userInput = "";
     private string countdown = "3";
     private double gameTimeElapsed;
@@ -25,6 +30,30 @@ public partial class TypeRush
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+
+        var filePath = Path.Combine(this.Env.WebRootPath, "data", "text-selection.json");
+
+        try
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException();
+            }
+
+            var json = await File.ReadAllTextAsync(filePath);
+
+            var textBib = JsonConvert.DeserializeObject<List<TextBib>>(json);
+
+            this.textToType = textBib!.Single(e => e.Aktiviert).Text;
+        }
+        catch (FileNotFoundException)
+        {
+            this.Logger.LogError($"Leaderboard.json wurde nicht gefunden. Verwendeter Pfad: {filePath}");
+        }
+        catch (Exception ex)
+        {
+            this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
+        }
 
         this.countdownTimer.Elapsed += CountdownElapsed;
     }
@@ -95,10 +124,10 @@ public partial class TypeRush
     {
         await Task.Delay(100);
 
-        return CountMistakesWithTolerance(TextToType, this.userInput);
+        return CountMistakesWithTolerance(this.textToType, this.userInput);
     }
 
-    private int CountMistakesWithTolerance(string expected, string input)
+    private static int CountMistakesWithTolerance(string expected, string input)
     {
         var mistakes = 0;
         var i = 0;
@@ -136,7 +165,7 @@ public partial class TypeRush
         return mistakes;
     }
 
-    private bool IsMatchWithinNextNCharacters(string first, string second, int i, int j, int maxOffset)
+    private static bool IsMatchWithinNextNCharacters(string first, string second, int i, int j, int maxOffset)
     {
         for (var offset = 1; offset <= maxOffset; offset++)
         {
@@ -157,6 +186,6 @@ public partial class TypeRush
 
     private void ReloadTypeRush()
     {
-        this.NavigationManager.NavigateTo("typerush", true);
+        this.NavigationManager.NavigateTo("type-rush", true);
     }
 }

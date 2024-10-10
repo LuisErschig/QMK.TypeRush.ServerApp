@@ -46,11 +46,11 @@ public partial class EnterLeaderboard
             await File.WriteAllTextAsync(filePath, jsonToSave);
         }
 
-        this.NavigationManager.NavigateTo("typerush");
+        this.NavigationManager.NavigateTo("type-rush");
     }
 
     protected void CancelAsync()
     {
-        this.NavigationManager.NavigateTo("typerush");
+        this.NavigationManager.NavigateTo("type-rush");
     }
 }

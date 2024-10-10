@@ -1,7 +1,8 @@
-﻿@page "/typerush"
+﻿@page "/type-rush"
 @inject IJSRuntime JsRuntime
 @inject ILogger<Leaderboard> Logger
 @inject NavigationManager NavigationManager
+@inject IWebHostEnvironment Env
 
 <PageTitle>TypeRush</PageTitle>
 
@@ -17,13 +18,13 @@
 
         case false:
             <div class="countdown-box">
-                @countdown
+                @this.countdown
             </div>
             break;
     }
 
     <div class="text-box" contenteditable="false">
-        @TextToType
+        @this.textToType
     </div>
 
     <div style="height: 60px;"></div>
@@ -32,13 +33,13 @@
 
     <div class="button-container-right" hidden="@StartButtonDisabled">
         <div style="height: 40px;"></div>
-        <button @onclick="StartCountdown" class="btn btn-primary" style="height: 65px; width: 200px; font-size: 22px;">Start Game</button>
+        <button @onclick="StartCountdown" class="btn btn-primary btn-lg" style="height: 65px; width: 200px; font-size: 22px; border-radius: 8px;">Start Game</button>
     </div>
     
     <div class="button-container-right" hidden="@AuswertungButtonDisabled">
         <div style="height: 40px;"></div>
-        <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px;">Zur Auswertung</button>
-        <button @onclick="ReloadTypeRush" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px;">Zurücksetzen</button>
+        <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px; border-radius: 8px;">Zur Auswertung</button>
+        <button @onclick="ReloadTypeRush" class="btn btn-danger" style="height: 65px; width: 180px; font-size: 18px; border-radius: 8px;">Zurücksetzen</button>
     </div>
 
 </main>
