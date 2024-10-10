@@ -18,6 +18,24 @@
     }
     else
     {
+        <div class="button-container-right">
+            <div class="dropdown">
+                <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ExportDropdown"))">
+                    <span class="material-symbols-outlined" style="vertical-align: bottom;">download</span>
+                    <span>EXPORT</span>
+                    <span class="ms-4 dropdown-toggle"></span>
+                </button>
+                <div id="ExportDropdown" class="mb-3 dropdown-menu dropdown-hide">
+                    <a href="data/leaderboard.json" class="dropdown-item" download>AS JSON</a>
+                    <button class="dropdown-item" @onclick="DownloadXml">AS XML</button>
+                    <button class="dropdown-item" @onclick="DownloadCsv">AS CSV</button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" @onclick="DownloadExcel">AS EXCEL</button>
+                    <button class="dropdown-item" @onclick="DownloadPdf">AS PDF</button>
+                </div>
+            </div>
+        </div>
+
         <div class="table-container-div">
             <table class="table table-leaderboard">
                 <thead>
@@ -30,22 +48,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach (var entry in this.leaderboardEntries)
-                    {
-                        <tr>
-                            <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
-                            <td class="cell-class"><span>@entry.Class</span></td>
-                            <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
-                            <td class="cell-errors"><span>@entry.Errors</span></td>
-                            <td class="button-row">
-                                <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
-                                    <span class="material-symbols-outlined">delete_forever</span>
-                                </button>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var entry in this.leaderboardEntries)
+                {
+                    <tr>
+                        <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
+                        <td class="cell-class"><span>@entry.Class</span></td>
+                        <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
+                        <td class="cell-errors"><span>@entry.Errors</span></td>
+                        <td class="button-row">
+                            <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
+                                <span class="material-symbols-outlined">delete_forever</span>
+                            </button>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
-    }
+        }
 </main>

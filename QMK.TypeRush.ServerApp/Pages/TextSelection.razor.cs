@@ -5,7 +5,7 @@ namespace QMK.TypeRush.ServerApp.Pages;
 
 public partial class TextSelection
 {
-    private List<TextBib>? texts;
+    private List<TextBib>? textBib;
 
     protected override async Task OnInitializedAsync()
     {
@@ -22,7 +22,7 @@ public partial class TextSelection
 
             var json = await File.ReadAllTextAsync(filePath);
 
-            this.texts = JsonConvert.DeserializeObject<List<TextBib>>(json);
+            this.textBib = JsonConvert.DeserializeObject<List<TextBib>>(json);
         }
         catch (FileNotFoundException)
         {
@@ -34,11 +34,33 @@ public partial class TextSelection
         }
     }
 
-    private async Task SetActiveText(int id)
+    private async Task SetActiveText(TextBib activatedText)
     {
-        foreach (var text in texts)
+        var filePath = Path.Combine(this.Env.WebRootPath, "data", "text-selection.json");
+
+        try
         {
-            text.Aktiviert = text.Id == id;
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException();
+            }
+
+            foreach (var singleText in this.textBib!)
+            {
+                singleText.Aktiviert = singleText == activatedText;
+            }
+
+            var jsonToSave = JsonConvert.SerializeObject(this.textBib, Formatting.Indented);
+
+            await File.WriteAllTextAsync(filePath, jsonToSave);
+        }
+        catch (FileNotFoundException)
+        {
+            this.Logger.LogError($"text-selection.json wurde nicht gefunden. Verwendeter Pfad: {filePath}");
+        }
+        catch (Exception ex)
+        {
+            this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
         }
     }
 }

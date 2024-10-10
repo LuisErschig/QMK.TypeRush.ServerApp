@@ -11,13 +11,13 @@
 
     <div style="height: 40px;"></div>
 
-    @if (this.texts == null)
+    @if (this.textBib == null)
     {
         <p style="display: flex; align-items: center; justify-content: center;"><em>Loading...</em></p>
     }
     else
     {
-        @foreach (var text in this.texts)
+        @foreach (var text in this.textBib)
         {
             <form>
                 <div class="row ms-5 mb-5">
@@ -25,11 +25,11 @@
                         <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text" />
                         @if (text.Aktiviert)
                         {
-                            <button class="btn btn-dark" @onclick="() => SetActiveText(text.Id)" disabled>Aktiviert</button>
+                            <button class="btn btn-dark" disabled>Aktiviert</button>
                         }
                         else
                         {
-                            <button class="btn btn-primary" @onclick="() => SetActiveText(text.Id)">Aktivieren</button>
+                            <button class="btn btn-primary" @onclick="() => SetActiveText(text)">Aktivieren</button>
                         }
                     </div>
                 </div>

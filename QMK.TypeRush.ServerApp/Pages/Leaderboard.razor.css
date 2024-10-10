@@ -11,6 +11,11 @@ h1 {
     text-align: center;
 }
 
+.button-container-right {
+    text-align: right;
+    margin: 0 20px 0 0;
+}
+
 .table-container-div {
     display: flex;
     align-items: center;
@@ -96,6 +101,34 @@ th {
         vertical-align: bottom;
         font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 200, 'opsz' 24
     }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: Segoe UI Semibold;
+}
+
+.dropdown-show {
+    display: block;
+}
+
+.dropdown-hide {
+    display: none;
+}
+
+.btn-secondary:focus {
+    color: #fff;
+    background-color: #5c636a;
+    border-color: #565e64;
+    box-shadow: 0 0 0 .25rem rgba(130, 138, 145, .5);
+}
+
+@media (max-width: 700px) {
+    .button-container-right {
+        text-align: center;
+        margin: 0;
+    }
+}
 
 
 /*Bewegender Text für zu langen Text*/
