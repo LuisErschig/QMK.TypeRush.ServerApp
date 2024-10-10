@@ -1,17 +1,4 @@
-﻿.main {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    margin: 0;
-    padding: 20px 0;
-}
-
-h1 {
-    font-family: 'Arial Black';
-    font-size: 50px;
-    text-align: center;
-}
-
-.text-box {
+﻿.text-box {
     background-color: #1b6ec2;
     color: #FFF;
     border-radius: 10px;
