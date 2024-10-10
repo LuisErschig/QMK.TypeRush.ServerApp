@@ -1,6 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using QMK.TypeRush.ServerApp.DataObjects;
+using System.Text;
 using System.Xml.Linq;
 
 namespace QMK.TypeRush.ServerApp.Pages;
@@ -205,7 +206,7 @@ public partial class Leaderboard
                 from entry in this.leaderboardEntries
                 select new XElement("Entry",
                     new XElement("Name", entry.Name),
-                    new XElement("Class", entry.Class ?? "N/A"),
+                    new XElement("Class", !string.IsNullOrWhiteSpace(entry.Class) ? entry.Class : "N / A"),
                     new XElement("Time", entry.Time),
                     new XElement("Errors", entry.Errors)
                 )
@@ -213,5 +214,33 @@ public partial class Leaderboard
         );
 
         return xDocument.ToString();
+    }
+
+    private async Task DownloadCsv()
+    {
+        const string fileName = "leaderboard.csv";
+
+        if (this.leaderboardEntries == null)
+        {
+            await this.JsRuntime.InvokeVoidAsync("alert", "Noch keine Einträge im Leaderboard");
+            return;
+        }
+
+        var csvContent = ConvertToCsv();
+
+        await this.JsRuntime.InvokeVoidAsync("downloadFile", fileName, csvContent);
+    }
+
+    private string ConvertToCsv()
+    {
+        var csv = new StringBuilder();
+        csv.AppendLine("Name,Class,Time,Errors");
+
+        foreach (var entry in this.leaderboardEntries!)
+        {
+            csv.AppendLine($"{entry.Name},{(!string.IsNullOrWhiteSpace(entry.Class) ? entry.Class : "N / A")},{entry.Time},{entry.Errors}");
+        }
+
+        return csv.ToString();
     }
 }

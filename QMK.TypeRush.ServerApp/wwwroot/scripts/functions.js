@@ -6,7 +6,6 @@
 }
 
 window.downloadFile = function (fileName, fileContent) {
-    console.log("Try to Download File.")
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/xml;charset=utf-8,' + encodeURIComponent(fileContent));
     element.setAttribute('download', fileName);
