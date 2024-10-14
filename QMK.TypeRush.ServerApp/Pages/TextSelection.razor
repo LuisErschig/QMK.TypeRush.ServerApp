@@ -20,7 +20,10 @@
             <form>
                 <div class="row ms-5 mb-5">
                     <div class="col-md-8">
-                        <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text" />
+                        <h5 class="mb-2">
+                            <strong>@text.Id - Schwierigkeit: @text.Schwierigkeit</strong>
+                        </h5>
+                        <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text"/>
                         @if (text.Aktiviert)
                         {
                             <button class="btn btn-dark" disabled>Aktiviert</button>

@@ -16,7 +16,18 @@
     }
     else
     {
-        <div class="button-container-right">
+        <div class="button-container-right mb-3">
+            <div class="dropdown me-1">
+                <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ChooseLeaderboardDropdown"))">
+                    <span>Choose Leaderboard</span>
+                    <span class="ms-4 dropdown-toggle"></span>
+                </button>
+                <div id="ChooseLeaderboardDropdown" class="mb-3 dropdown-menu dropdown-hide">
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(1)">Leaderboard 1</button>
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(2)">Leaderboard 2</button>
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(3)">Leaderboard 3</button>
+                </div>
+            </div>
             <div class="dropdown">
                 <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ExportDropdown"))">
                     <span class="material-symbols-outlined" style="vertical-align: bottom;">download</span>
@@ -24,7 +35,7 @@
                     <span class="ms-4 dropdown-toggle"></span>
                 </button>
                 <div id="ExportDropdown" class="mb-3 dropdown-menu dropdown-hide">
-                    <a href="data/leaderboard.json" class="dropdown-item" download>AS JSON</a>
+                    <button class="dropdown-item" @onclick="DownloadJson">AS JSON</button>
                     <button class="dropdown-item" @onclick="DownloadXml">AS XML</button>
                     <button class="dropdown-item" @onclick="DownloadCsv">AS CSV</button>
                     <div class="dropdown-divider"></div>
@@ -34,7 +45,12 @@
             </div>
         </div>
 
+        <h4 class="ms-4 mb-1">
+            <strong>@this.activeLeaderboard</strong>
+        </h4>
+
         <div class="table-container-div">
+
             <table class="table table-leaderboard">
                 <thead>
                     <tr>

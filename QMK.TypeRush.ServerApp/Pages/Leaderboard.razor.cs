@@ -20,6 +20,10 @@ public partial class Leaderboard
 {
     private List<LeaderboardEntries>? leaderboardEntries;
 
+    private string activeLeaderboardPath = string.Empty;
+
+    private string activeLeaderboard = string.Empty;
+
     private string currentSortColumn = "Errors";
 
     private bool isSortAscending = true;
@@ -28,7 +32,51 @@ public partial class Leaderboard
     {
         await base.OnInitializedAsync();
 
-        var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
+        var textId = await GetSelectedText();
+
+        if (textId == -1)
+        {
+            return;
+        }
+
+        this.activeLeaderboardPath = $"leaderboard-text-{textId}.json";
+        this.activeLeaderboard = $"Leaderboard {textId}";
+
+        await GetLeaderboardEntries();
+    }
+
+    private async Task<int> GetSelectedText()
+    {
+        var filePath = Path.Combine(this.Env.WebRootPath, "data", "text-selection.json");
+
+        try
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException();
+            }
+
+            var json = await File.ReadAllTextAsync(filePath);
+
+            var textBib = JsonConvert.DeserializeObject<List<TextBib>>(json);
+
+            return textBib!.Single(e => e.Aktiviert).Id;
+        }
+        catch (FileNotFoundException)
+        {
+            this.Logger.LogError($"Leaderboard.json wurde nicht gefunden. Verwendeter Pfad: {filePath}");
+            return -1;
+        }
+        catch (Exception ex)
+        {
+            this.Logger.LogError(ex, $"Exception occured. ExceptionMessage: {ex.Message}");
+            return -1;
+        }
+    }
+
+    private async Task GetLeaderboardEntries()
+    {
+        var filePath = Path.Combine(this.Env.WebRootPath, "data", this.activeLeaderboardPath);
 
         try
         {
@@ -152,11 +200,6 @@ public partial class Leaderboard
         }
     }
 
-    public async Task ToggleDropdownAsync(string containerId)
-    {
-        await this.JsRuntime.InvokeVoidAsync("toggleDropdown", containerId);
-    }
-
     public async Task DeleteEntry(LeaderboardEntries entry)
     {
         try
@@ -176,7 +219,7 @@ public partial class Leaderboard
 
             this.leaderboardEntries.Remove(entry);
 
-            var filePath = Path.Combine(this.Env.WebRootPath, "data", "leaderboard.json");
+            var filePath = Path.Combine(this.Env.WebRootPath, "data", this.activeLeaderboardPath);
             var json = JsonConvert.SerializeObject(this.leaderboardEntries, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, json);
 
@@ -192,8 +235,42 @@ public partial class Leaderboard
         }
     }
 
+    public async Task ToggleDropdownAsync(string containerId)
+    {
+        await this.JsRuntime.InvokeVoidAsync("toggleDropdown", containerId);
+    }
+
+    private async Task ChooseLeaderboard(int textId)
+    {
+        this.activeLeaderboard = $"Leaderboard {textId}";
+        this.activeLeaderboardPath = Path.Combine(this.Env.WebRootPath, "data", $"leaderboard-text-{textId}.json");
+
+        await GetLeaderboardEntries();
+
+        await ToggleDropdownAsync("ChooseLeaderboardDropdown");
+    }
+
+    private async Task DownloadJson()
+    {
+        await ToggleDropdownAsync("ExportDropdown");
+
+        const string fileName = "leaderboard.json";
+
+        if (this.leaderboardEntries == null)
+        {
+            await this.JsRuntime.InvokeVoidAsync("alert", "Noch keine Einträge im Leaderboard");
+            return;
+        }
+
+        var jsonContent = JsonConvert.SerializeObject(this.leaderboardEntries, Formatting.Indented);
+
+        await this.JsRuntime.InvokeVoidAsync("downloadFile", fileName, jsonContent);
+    }
+
     private async Task DownloadXml()
     {
+        await ToggleDropdownAsync("ExportDropdown");
+
         const string fileName = "leaderboard.xml";
 
         if (this.leaderboardEntries == null)
@@ -226,6 +303,8 @@ public partial class Leaderboard
 
     private async Task DownloadCsv()
     {
+        await ToggleDropdownAsync("ExportDropdown");
+
         const string fileName = "leaderboard.csv";
 
         if (this.leaderboardEntries == null)
@@ -254,6 +333,8 @@ public partial class Leaderboard
 
     private async Task DownloadExcel()
     {
+        await ToggleDropdownAsync("ExportDropdown");
+
         const string fileName = "leaderboard.xlsx";
 
         if (this.leaderboardEntries == null)
@@ -306,6 +387,8 @@ public partial class Leaderboard
 
     private async Task DownloadPdf()
     {
+        await ToggleDropdownAsync("ExportDropdown");
+
         const string fileName = "leaderboard.pdf";
 
         if (this.leaderboardEntries == null)
