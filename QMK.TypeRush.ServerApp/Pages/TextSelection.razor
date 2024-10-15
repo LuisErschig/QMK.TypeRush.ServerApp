@@ -6,14 +6,12 @@
 
 <main class="main">
     <h1>Select Text</h1>
-    
     <hr />
-
     <div style="height: 40px;"></div>
 
     @if (this.textBib == null)
     {
-        <p style="display: flex; align-items: center; justify-content: center;"><em>Loading...</em></p>
+        <p class="loading-p"><em>Loading...</em></p>
     }
     else
     {
@@ -22,7 +20,10 @@
             <form>
                 <div class="row ms-5 mb-5">
                     <div class="col-md-8">
-                        <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text" />
+                        <h5 class="mb-2">
+                            <strong>@text.Id - Schwierigkeit: @text.Schwierigkeit</strong>
+                        </h5>
+                        <input class="form-control mb-2" type="text" readonly autocomplete="off" @bind="text.Text"/>
                         @if (text.Aktiviert)
                         {
                             <button class="btn btn-dark" disabled>Aktiviert</button>
