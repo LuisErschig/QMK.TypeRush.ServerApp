@@ -1,16 +1,19 @@
 [
   {
     "Id": 1,
+    "Schwierigkeit": "Einfach",
     "Aktiviert": false,
     "Text": "Ein einfacher Beispieltext für Typerace."
   },
   {
     "Id": 2,
+    "Schwierigkeit": "Mittel",
     "Aktiviert": true,
     "Text": "Dieser Text enthält mehr Sonderzeichen! Wie z.B.: !?§$%&"
   },
   {
     "Id": 3,
+    "Schwierigkeit": "Schwer",
     "Aktiviert": false,
     "Text": "Ein längerer und schwierigerer Text, der für fortgeschrittene Spieler geeignet ist."
   }

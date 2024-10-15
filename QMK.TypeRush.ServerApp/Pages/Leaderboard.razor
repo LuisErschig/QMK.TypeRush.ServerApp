@@ -7,18 +7,27 @@
 
 <main class="main">
     <h1>Leaderboard</h1>
-
     <hr />
-
     <div style="height: 40px;"></div>
 
     @if (this.leaderboardEntries == null)
     {
-        <p style="display: flex; align-items: center; justify-content: center;"><em>Loading...</em></p>
+        <p class="loading-p"><em>Loading...</em></p>
     }
     else
     {
-        <div class="button-container-right">
+        <div class="button-container-right mb-3">
+            <div class="dropdown me-1">
+                <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ChooseLeaderboardDropdown"))">
+                    <span>Choose Leaderboard</span>
+                    <span class="ms-4 dropdown-toggle"></span>
+                </button>
+                <div id="ChooseLeaderboardDropdown" class="mb-3 dropdown-menu dropdown-hide">
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(1)">Leaderboard 1</button>
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(2)">Leaderboard 2</button>
+                    <button class="dropdown-item" @onclick="() => ChooseLeaderboard(3)">Leaderboard 3</button>
+                </div>
+            </div>
             <div class="dropdown">
                 <button type="button" class="btn btn-secondary" @onclick="@(() => this.ToggleDropdownAsync("ExportDropdown"))">
                     <span class="material-symbols-outlined" style="vertical-align: bottom;">download</span>
@@ -26,7 +35,7 @@
                     <span class="ms-4 dropdown-toggle"></span>
                 </button>
                 <div id="ExportDropdown" class="mb-3 dropdown-menu dropdown-hide">
-                    <a href="data/leaderboard.json" class="dropdown-item" download>AS JSON</a>
+                    <button class="dropdown-item" @onclick="DownloadJson">AS JSON</button>
                     <button class="dropdown-item" @onclick="DownloadXml">AS XML</button>
                     <button class="dropdown-item" @onclick="DownloadCsv">AS CSV</button>
                     <div class="dropdown-divider"></div>
@@ -36,34 +45,39 @@
             </div>
         </div>
 
+        <h4 class="ms-4 mb-1">
+            <strong>@this.activeLeaderboard</strong>
+        </h4>
+
         <div class="table-container-div">
+
             <table class="table table-leaderboard">
                 <thead>
-                <tr>
-                    <th class="cell-name" @onclick="@(() => this.SortTable("Name"))">Name @(this.GetSortIcon("Name"))</th>
-                    <th class="cell-class" @onclick="@(() => this.SortTable("Class"))">Class @(this.GetSortIcon("Class"))</th>
-                    <th class="cell-time" @onclick="@(() => this.SortTable("Time"))">Time @(this.GetSortIcon("Time"))</th>
-                    <th class="cell-errors" @onclick="@(() => this.SortTable("Errors"))">Errors @(this.GetSortIcon("Errors"))</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th class="cell-name" @onclick="@(() => this.SortTable("Name"))">Name @(this.GetSortIcon("Name"))</th>
+                        <th class="cell-class" @onclick="@(() => this.SortTable("Class"))">Class @(this.GetSortIcon("Class"))</th>
+                        <th class="cell-time" @onclick="@(() => this.SortTable("Time"))">Time @(this.GetSortIcon("Time"))</th>
+                        <th class="cell-errors" @onclick="@(() => this.SortTable("Errors"))">Errors @(this.GetSortIcon("Errors"))</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (var entry in this.leaderboardEntries)
-                {
-                    <tr>
-                        <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
-                        <td class="cell-class"><span>@entry.Class</span></td>
-                        <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
-                        <td class="cell-errors"><span>@entry.Errors</span></td>
-                        <td class="button-row">
-                            <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
-                                <span class="material-symbols-outlined">delete_forever</span>
-                            </button>
-                        </td>
-                    </tr>
-                }
+                    @foreach (var entry in this.leaderboardEntries)
+                    {
+                        <tr>
+                            <td class="cell-name" style="overflow-x: auto; white-space: nowrap;">@entry.Name</td>
+                            <td class="cell-class"><span>@entry.Class</span></td>
+                            <td class="cell-time"><span>@GeneralizeTime(entry.Time)</span></td>
+                            <td class="cell-errors"><span>@entry.Errors</span></td>
+                            <td class="button-row">
+                                <button class="action-in-row-button" @onclick="@(() => DeleteEntry(entry))">
+                                    <span class="material-symbols-outlined">delete_forever</span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
-        }
+    }
 </main>

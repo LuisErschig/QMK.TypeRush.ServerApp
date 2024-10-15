@@ -10,36 +10,42 @@
     <h1>TypeRush</h1>
     <hr />
 
-    @switch (CountdownBoxDisabled)
+    @if (this.textToType == string.Empty)
     {
-        case true:
-            <div style="height: 175px;"></div>
-            break;
-
-        case false:
-            <div class="countdown-box">
-                @this.countdown
-            </div>
-            break;
+        <p class="loading-p"><em>Loading...</em></p>
     }
+    else
+    {
+        @switch (CountdownBoxDisabled)
+        {
+            case true:
+                <div style="height: 175px;"></div>
+                break;
 
-    <div class="text-box" contenteditable="false">
-        @this.textToType
-    </div>
+            case false:
+                <div class="countdown-box">
+                    @this.countdown
+                </div>
+                break;
+        }
 
-    <div style="height: 60px;"></div>
+        <div class="text-box" contenteditable="false">
+            @this.textToType
+        </div>
 
-    <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDisabled" autocomplete="off" />
+        <div style="height: 60px;"></div>
 
-    <div class="button-container-right" hidden="@StartButtonDisabled">
-        <div style="height: 40px;"></div>
-        <button @onclick="StartCountdown" class="btn btn-primary btn-lg" style="height: 65px; width: 200px; font-size: 22px; border-radius: 8px;">Start Game</button>
-    </div>
-    
-    <div class="button-container-right" hidden="@AuswertungButtonDisabled">
-        <div style="height: 40px;"></div>
-        <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px; border-radius: 8px;">Zur Auswertung</button>
-        <button @onclick="ReloadTypeRush" class="btn btn-danger" style="height: 65px; width: 180px; font-size: 18px; border-radius: 8px;">Zurücksetzen</button>
-    </div>
+        <input id="UserInputBox" class="input-box" type="text" @onkeydown="HandleKeyDownAsync" @bind="userInput" disabled="@InputDisabled" autocomplete="off" />
 
+        <div class="button-container-right" hidden="@StartButtonDisabled">
+            <div style="height: 40px;"></div>
+            <button @onclick="StartCountdown" class="btn btn-primary btn-lg" style="height: 65px; width: 200px; font-size: 22px; border-radius: 8px;">Start Game</button>
+        </div>
+
+        <div class="button-container-right" hidden="@AuswertungButtonDisabled">
+            <div style="height: 40px;"></div>
+            <button @onclick="NavigateToEnterLeaderboard" class="btn btn-primary" style="height: 65px; width: 180px; font-size: 18px; margin-right: 25px; border-radius: 8px;">Zur Auswertung</button>
+            <button @onclick="ReloadTypeRush" class="btn btn-danger" style="height: 65px; width: 180px; font-size: 18px; border-radius: 8px;">Zurücksetzen</button>
+        </div>
+    }
 </main>
