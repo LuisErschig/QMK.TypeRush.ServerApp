@@ -3,18 +3,18 @@
     "Id": 1,
     "Schwierigkeit": "Einfach",
     "Aktiviert": false,
-    "Text": "Ein einfacher Beispieltext für Typerace."
+    "Text": "Ein Computer ist eine Maschine, die Daten verarbeitet und Informationen ausgibt. Er besteht aus verschiedenen Bauteilen wie Prozessor, Arbeitsspeicher und Festplatte. Diese Komponenten arbeiten zusammen, um Programme auszuführen. Um mit einem Computer zu kommunizieren, nutzen wir Tastatur und Maus. Moderne Computer sind in vielen Bereichen unverzichtbar geworden – von der Datenanalyse über die Steuerung von Maschinen bis hin zur Kommunikation."
   },
   {
     "Id": 2,
     "Schwierigkeit": "Mittel",
     "Aktiviert": true,
-    "Text": "Dieser Text enthält mehr Sonderzeichen! Wie z.B.: !?§$%&"
+    "Text": "Ein Algorithmus ist eine Abfolge von Anweisungen, die ein bestimmtes Problem löst. In der Informatik schreiben Entwickler Code, um komplexe Abläufe zu automatisieren. Ein Codeblock beginnt oft mit einer If-Bedingung und kann Schleifen wie for und while enthalten, um Aufgaben zu wiederholen. Variablen, Funktionen und Arrays helfen dabei, Daten zu speichern und zu verwalten. Entwickler nutzen auch Zeichen wie { }, ; und =, um ihre Programme zu strukturieren und verschiedene Anweisungen zu trennen."
   },
   {
     "Id": 3,
     "Schwierigkeit": "Schwer",
     "Aktiviert": false,
-    "Text": "Ein längerer und schwierigerer Text, der für fortgeschrittene Spieler geeignet ist."
+    "Text": "In der Welt der Programmierung ist eine der häufigsten Aufgaben die Arbeit mit Zeichenketten, also sogenannten Strings. Beispielsweise können Entwickler mithilfe der Funktion substring(start, end) einen Teil eines Strings extrahieren. Komplexe Programme nutzen oft if-else-Strukturen sowie Schleifen wie for(i=0; i < array.length; i++), um durch Arrays zu iterieren. Sonderzeichen wie {}, [] oder <> spielen eine zentrale Rolle, um Codeblöcke zu definieren und Daten zu vergleichen. Auch das sogenannte 'Debugging' (Fehlersuche) gehört dazu. Hierbei kommen Funktionen wie console.log(variable) zum Einsatz, um Variablenwerte im Programmablauf zu prüfen und Fehlerquellen aufzudecken."
   }
 ]
