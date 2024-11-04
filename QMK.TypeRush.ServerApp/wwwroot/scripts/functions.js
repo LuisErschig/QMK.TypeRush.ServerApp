@@ -38,3 +38,15 @@ function toggleDropdown(containerId) {
         element.classList.add(showDropdown);
     }
 }
+
+function applyShakeEffect(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.classList.add("shake");
+
+        // Entfernt die Klasse nach der Animation, sodass sie später wieder hinzugefügt werden kann
+        element.addEventListener("animationend", () => {
+            element.classList.remove("shake");
+        }, { once: true });
+    }
+}
