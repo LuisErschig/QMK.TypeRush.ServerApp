@@ -15,12 +15,12 @@
         <div class="row mt-2">
             <div class="col-md-8">
                 <label class="control-label">Name</label>
-                <input id="InputName" class="form-control" type="text" autocomplete="off" @bind="leaderboardEntries.Name" readonly="@this.parameterAreIncomplete"/>
+                <input id="InputName" class="form-control @NameCssClass" type="text" autocomplete="off" @bind="leaderboardEntries.Name" readonly="@this.parameterAreIncomplete"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-md-8">
-                <label class="control-label">Klasse</label>
+                <label class="control-label">Klasse (optional)</label>
                 <input id="InputClass" class="form-control" type="text" autocomplete="off" @bind="leaderboardEntries.Class" readonly="@this.parameterAreIncomplete"/>
             </div>
         </div>

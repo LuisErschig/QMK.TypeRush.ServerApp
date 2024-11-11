@@ -12,6 +12,8 @@ public partial class EnterLeaderboard
 
     private bool parameterAreIncomplete;
 
+    private string NameCssClass = "";
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync(); 
@@ -80,6 +82,14 @@ public partial class EnterLeaderboard
 
         try
         {
+            if (string.IsNullOrEmpty(this.leaderboardEntries.Name))
+            {
+                this.NameCssClass = string.IsNullOrEmpty(this.leaderboardEntries.Name) ? "input-error shake" : "";
+                await Task.Delay(2000);
+                this.NameCssClass = "";
+                return;
+            }
+
             if (!string.IsNullOrEmpty(this.leaderboardEntries.Name))
             {
                 List<LeaderboardEntries> entries;
