@@ -1,5 +1,17 @@
 [
   {
+    "Name": "Simon bleibt KING",
+    "Class": null,
+    "Time": 25.2595286,
+    "Errors": 0
+  },
+  {
+    "Name": "Lukas",
+    "Class": "E3IT1T",
+    "Time": 26.81531,
+    "Errors": 0
+  },
+  {
     "Name": "Simon bleibt krass!",
     "Class": null,
     "Time": 31.8084502,
@@ -12,6 +24,12 @@
     "Errors": 0
   },
   {
+    "Name": "Lk",
+    "Class": null,
+    "Time": 33.9559963,
+    "Errors": 0
+  },
+  {
     "Name": "Luis Erschig",
     "Class": "E3FI1T",
     "Time": 39.2192457,
@@ -21,6 +39,18 @@
     "Name": "Simon",
     "Class": "E3FI1T",
     "Time": 39.7941831,
+    "Errors": 0
+  },
+  {
+    "Name": "Lukas",
+    "Class": null,
+    "Time": 40.1487687,
+    "Errors": 0
+  },
+  {
+    "Name": "Kev 2",
+    "Class": null,
+    "Time": 40.2088842,
     "Errors": 0
   },
   {
@@ -39,6 +69,18 @@
     "Name": "Schulz",
     "Class": "Aaaaaalle",
     "Time": 61.7346371,
+    "Errors": 0
+  },
+  {
+    "Name": "Kev",
+    "Class": null,
+    "Time": 61.8472461,
+    "Errors": 0
+  },
+  {
+    "Name": "Lukas",
+    "Class": null,
+    "Time": 71.1994279,
     "Errors": 0
   },
   {
@@ -81,6 +123,12 @@
     "Name": "Frank",
     "Class": null,
     "Time": 110.1294547,
+    "Errors": 0
+  },
+  {
+    "Name": "Michael",
+    "Class": null,
+    "Time": 112.458965,
     "Errors": 0
   },
   {
@@ -196,5 +244,11 @@
     "Class": "E3FS1T",
     "Time": 83.3243106,
     "Errors": 29
+  },
+  {
+    "Name": "wasadsa",
+    "Class": "wadsd",
+    "Time": 42.3176598,
+    "Errors": 59
   }
 ]
