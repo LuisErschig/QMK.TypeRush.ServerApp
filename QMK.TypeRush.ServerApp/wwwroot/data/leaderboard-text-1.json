@@ -1,5 +1,17 @@
 [
   {
+    "Name": "Simon bleibt krass!",
+    "Class": null,
+    "Time": 31.8084502,
+    "Errors": 0
+  },
+  {
+    "Name": "Pascal der von Sick",
+    "Class": null,
+    "Time": 32.3642592,
+    "Errors": 0
+  },
+  {
     "Name": "Luis Erschig",
     "Class": "E3FI1T",
     "Time": 39.2192457,
@@ -39,6 +51,18 @@
     "Name": "TM",
     "Class": "1BSAVD",
     "Time": 78.8678598,
+    "Errors": 0
+  },
+  {
+    "Name": "Andi",
+    "Class": null,
+    "Time": 79.3259261,
+    "Errors": 0
+  },
+  {
+    "Name": "Feldbusch",
+    "Class": "Lehrkräfte",
+    "Time": 85.7541906,
     "Errors": 0
   },
   {
@@ -84,6 +108,18 @@
     "Errors": 1
   },
   {
+    "Name": "Trego",
+    "Class": "E3FS1T",
+    "Time": 63.9460085,
+    "Errors": 1
+  },
+  {
+    "Name": "Linus",
+    "Class": null,
+    "Time": 78.9706458,
+    "Errors": 1
+  },
+  {
     "Name": "Julia",
     "Class": null,
     "Time": 80.2303322,
@@ -93,6 +129,18 @@
     "Name": "Cultus Amogus",
     "Class": null,
     "Time": 56.0231628,
+    "Errors": 2
+  },
+  {
+    "Name": "Onur",
+    "Class": null,
+    "Time": 64.0861761,
+    "Errors": 2
+  },
+  {
+    "Name": "Luis Gauglitz",
+    "Class": null,
+    "Time": 72.9971383,
     "Errors": 2
   },
   {
@@ -123,6 +171,12 @@
     "Name": "lionel",
     "Class": "6TG8/1",
     "Time": 83.1268082,
+    "Errors": 3
+  },
+  {
+    "Name": "Martin B",
+    "Class": null,
+    "Time": 100.7210265,
     "Errors": 3
   },
   {
