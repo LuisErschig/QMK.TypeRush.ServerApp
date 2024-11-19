@@ -1,8 +1,56 @@
 [
   {
+    "Name": "Luis Erschig",
+    "Class": "E3FI1T",
+    "Time": 39.2192457,
+    "Errors": 0
+  },
+  {
+    "Name": "Simon",
+    "Class": "E3FI1T",
+    "Time": 39.7941831,
+    "Errors": 0
+  },
+  {
+    "Name": "Lynn",
+    "Class": "13/5",
+    "Time": 50.2720165,
+    "Errors": 0
+  },
+  {
+    "Name": "Nils",
+    "Class": "2BFE2-1",
+    "Time": 57.6837627,
+    "Errors": 0
+  },
+  {
     "Name": "Schulz",
     "Class": "Aaaaaalle",
     "Time": 61.7346371,
+    "Errors": 0
+  },
+  {
+    "Name": "asd",
+    "Class": null,
+    "Time": 76.9713451,
+    "Errors": 0
+  },
+  {
+    "Name": "TM",
+    "Class": "1BSAVD",
+    "Time": 78.8678598,
+    "Errors": 0
+  },
+  {
+    "Name": "MLS",
+    "Class": "1BSAVD",
+    "Time": 88.2757559,
+    "Errors": 0
+  },
+  {
+    "Name": "Nino",
+    "Class": "E1FI2",
+    "Time": 88.9355457,
     "Errors": 0
   },
   {
@@ -12,9 +60,21 @@
     "Errors": 0
   },
   {
+    "Name": "JM",
+    "Class": "1BSAVD",
+    "Time": 123.853374,
+    "Errors": 0
+  },
+  {
     "Name": "Simon",
     "Class": "E3FI1T",
     "Time": 41.7784901,
+    "Errors": 1
+  },
+  {
+    "Name": "Johann",
+    "Class": null,
+    "Time": 44.9406545,
     "Errors": 1
   },
   {
@@ -22,6 +82,24 @@
     "Class": null,
     "Time": 46.321543,
     "Errors": 1
+  },
+  {
+    "Name": "Julia",
+    "Class": null,
+    "Time": 80.2303322,
+    "Errors": 1
+  },
+  {
+    "Name": "Cultus Amogus",
+    "Class": null,
+    "Time": 56.0231628,
+    "Errors": 2
+  },
+  {
+    "Name": "konstantin choch",
+    "Class": "6tg8/1",
+    "Time": 101.7083627,
+    "Errors": 2
   },
   {
     "Name": "Marie",
@@ -36,9 +114,33 @@
     "Errors": 2
   },
   {
+    "Name": "joseph stalin",
+    "Class": null,
+    "Time": 71.0251093,
+    "Errors": 3
+  },
+  {
+    "Name": "lionel",
+    "Class": "6TG8/1",
+    "Time": 83.1268082,
+    "Errors": 3
+  },
+  {
     "Name": "Lene",
     "Class": "9r",
     "Time": 92.2185495,
     "Errors": 4
+  },
+  {
+    "Name": "Florian",
+    "Class": "11 1",
+    "Time": 96.0247453,
+    "Errors": 7
+  },
+  {
+    "Name": "Max",
+    "Class": "E3FS1T",
+    "Time": 83.3243106,
+    "Errors": 29
   }
 ]
