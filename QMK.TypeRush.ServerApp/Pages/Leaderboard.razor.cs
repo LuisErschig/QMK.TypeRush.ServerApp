@@ -28,6 +28,8 @@ public partial class Leaderboard
 
     private bool isSortAscending = true;
 
+    private Timer? refreshTimer;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -43,7 +45,27 @@ public partial class Leaderboard
         this.activeLeaderboard = $"Leaderboard {textId}";
 
         await GetLeaderboardEntries();
+
+        // Timer alle 5 Sekunden starten
+        refreshTimer = new Timer(RefreshLeaderboard, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
+
+    private async void RefreshLeaderboard(object? state)
+    {
+        try
+        {
+            await InvokeAsync(async () =>
+            {
+                await GetLeaderboardEntries(); // Leaderboard-Daten neu laden
+                StateHasChanged(); // UI-Update anstoßen
+            });
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during automatic refresh.");
+        }
+    }
+
 
     private async Task<int> GetSelectedText()
     {
@@ -458,4 +480,10 @@ public partial class Leaderboard
         }
         return memoryStream.ToArray();
     }
+
+    public void Dispose()
+    {
+        refreshTimer?.Dispose();
+    }
+
 }
