@@ -1,2 +1,44 @@
 [
+  {
+    "Name": "Schulz",
+    "Class": "Aaaaaalle",
+    "Time": 61.7346371,
+    "Errors": 0
+  },
+  {
+    "Name": "Frank",
+    "Class": null,
+    "Time": 110.1294547,
+    "Errors": 0
+  },
+  {
+    "Name": "Simon",
+    "Class": "E3FI1T",
+    "Time": 41.7784901,
+    "Errors": 1
+  },
+  {
+    "Name": "Ronny",
+    "Class": null,
+    "Time": 46.321543,
+    "Errors": 1
+  },
+  {
+    "Name": "Marie",
+    "Class": "9r",
+    "Time": 110.8037051,
+    "Errors": 2
+  },
+  {
+    "Name": "Urs Bauer",
+    "Class": "Chef!",
+    "Time": 170.307575,
+    "Errors": 2
+  },
+  {
+    "Name": "Lene",
+    "Class": "9r",
+    "Time": 92.2185495,
+    "Errors": 4
+  }
 ]
