@@ -9,12 +9,12 @@
     "Id": 2,
     "Schwierigkeit": "Mittel",
     "Aktiviert": true,
-    "Text": "Ein Algorithmus ist eine Abfolge von Anweisungen, die ein bestimmtes Problem löst. In der Informatik schreiben Entwickler Code, um komplexe Abläufe zu automatisieren. Ein Codeblock beginnt oft mit einer If-Bedingung und kann Schleifen wie for und while enthalten, um Aufgaben zu wiederholen. Variablen, Funktionen und Arrays helfen dabei, Daten zu speichern und zu verwalten. Entwickler nutzen auch Zeichen wie { }, ; und =, um ihre Programme zu strukturieren und verschiedene Anweisungen zu trennen."
+    "Text": "Algorithmen sind genaue Anweisungen, die zur Lösung von Problemen verwendet werden. In der Programmierung kommen oft Schleifen wie for oder while zum Einsatz, um sich wiederholende Aufgaben zu automatisieren. Eine Variable speichert Werte wie Zahlen oder Texte. Operatoren wie +, -, * und / führen Berechnungen aus, während Bedingungen (if, else) Entscheidungen ermöglichen. Entwickler nutzen Programme wie Visual Studio Code oder Notepad++, um Code zu schreiben. Genauigkeit ist entscheidend, da ein kleiner Fehler zu einem Absturz führen kann."
   },
   {
     "Id": 3,
     "Schwierigkeit": "Schwer",
     "Aktiviert": false,
-    "Text": "In der Welt der Programmierung ist eine der häufigsten Aufgaben die Arbeit mit Zeichenketten, also sogenannten Strings. Beispielsweise können Entwickler mithilfe der Funktion substring(start, end) einen Teil eines Strings extrahieren. Komplexe Programme nutzen oft if-else-Strukturen sowie Schleifen wie for(i=0; i < array.length; i++), um durch Arrays zu iterieren. Sonderzeichen wie {}, [] oder <> spielen eine zentrale Rolle, um Codeblöcke zu definieren und Daten zu vergleichen. Auch das sogenannte 'Debugging' (Fehlersuche) gehört dazu. Hierbei kommen Funktionen wie console.log(variable) zum Einsatz, um Variablenwerte im Programmablauf zu prüfen und Fehlerquellen aufzudecken."
+    "Text": "Programmierer arbeiten oft mit Funktionen wie split(), um Zeichenketten zu teilen, oder mit indexOf(), um nach bestimmten Werten zu suchen. Bei Bedingungen (if x == 10:) steuert der Doppelpunkt den Beginn eines Blocks. Schleifen wie for i in range(5): zählen durch Werte, während Operatoren wie == oder != Vergleiche durchführen. Fehler in Programmen nennt man Bugs und die Fehlersuche (Debugging) erfolgt oft mit Tools wie print(variable) oder Debuggern in IDEs. Kommentare (# oder //) helfen dabei, Code verständlich zu dokumentieren. Selbst eine fehlende Klammer oder ein falsches Semikolon (;) kann dazu führen, dass ein Programm nicht mehr läuft."
   }
 ]
