@@ -3,18 +3,18 @@
     "Id": 1,
     "Schwierigkeit": "Einfach",
     "Aktiviert": false,
-    "Text": "Ein Computer ist eine Maschine, die Daten verarbeitet und Informationen ausgibt. Er besteht aus verschiedenen Bauteilen wie Prozessor, Arbeitsspeicher und Festplatte. Diese Komponenten arbeiten zusammen, um Programme auszuführen. Um mit einem Computer zu kommunizieren, nutzen wir Tastatur und Maus. Moderne Computer sind in vielen Bereichen unverzichtbar geworden – von der Datenanalyse über die Steuerung von Maschinen bis hin zur Kommunikation."
+    "Text": "Ein Computer ist eine Maschine, die Daten verarbeitet und Informationen ausgibt. Er besteht aus verschiedenen Bauteilen wie Prozessor, Arbeitsspeicher und Festplatte."
   },
   {
     "Id": 2,
     "Schwierigkeit": "Mittel",
     "Aktiviert": true,
-    "Text": "Algorithmen sind genaue Anweisungen, die zur Lösung von Problemen verwendet werden. In der Programmierung kommen oft Schleifen wie for oder while zum Einsatz, um sich wiederholende Aufgaben zu automatisieren. Eine Variable speichert Werte wie Zahlen oder Texte. Operatoren wie +, -, * und / führen Berechnungen aus, während Bedingungen (if, else) Entscheidungen ermöglichen. Entwickler nutzen Programme wie Visual Studio Code oder Notepad++, um Code zu schreiben. Genauigkeit ist entscheidend, da ein kleiner Fehler zu einem Absturz führen kann."
+    "Text": "In der Programmierung kommen oft Schleifen wie for oder while zum Einsatz, um sich wiederholende Aufgaben zu automatisieren. Eine Variable speichert Werte wie Zahlen oder Texte. Operatoren wie +, -, * und / führen Berechnungen aus, während Bedingungen (if, else) Entscheidungen ermöglichen."
   },
   {
     "Id": 3,
     "Schwierigkeit": "Schwer",
     "Aktiviert": false,
-    "Text": "Programmierer arbeiten oft mit Funktionen wie split(), um Zeichenketten zu teilen, oder mit indexOf(), um nach bestimmten Werten zu suchen. Bei Bedingungen (if x == 10:) steuert der Doppelpunkt den Beginn eines Blocks. Schleifen wie for i in range(5): zählen durch Werte, während Operatoren wie == oder != Vergleiche durchführen. Fehler in Programmen nennt man Bugs und die Fehlersuche (Debugging) erfolgt oft mit Tools wie print(variable) oder Debuggern in IDEs. Kommentare (# oder //) helfen dabei, Code verständlich zu dokumentieren. Selbst eine fehlende Klammer oder ein falsches Semikolon (;) kann dazu führen, dass ein Programm nicht mehr läuft."
+    "Text": "Bei Bedingungen (if x == 10:) steuert der Doppelpunkt den Beginn eines Blocks. Schleifen wie for i in range(5): zählen durch Werte, während Operatoren wie == oder != Vergleiche durchführen. Fehler in Programmen nennt man Bugs und die Fehlersuche (Debugging) erfolgt oft mit Tools wie print(variable) oder Debuggern in IDEs. Kommentare (# oder //) helfen dabei, Code verständlich zu dokumentieren."
   }
 ]
